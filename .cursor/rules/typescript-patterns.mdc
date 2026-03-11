@@ -1,0 +1,62 @@
+---
+description: TypeScript coding standards and patterns
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript Patterns
+
+## Types vs Interfaces
+
+Use `interface` for object shapes, props, and extending types:
+```typescript
+interface ButtonProps {
+  title: string
+  onPress: () => void
+}
+```
+
+Use `type` for unions, primitives, and mapped types:
+```typescript
+type Status = 'active' | 'inactive'
+type ID = string | number
+```
+
+## Nullability
+
+```typescript
+// Optional chaining
+const name = user?.profile?.name
+
+// Prefer nullish coalescing (??) over ||
+const count = value ?? 0  // preserves 0, '', false
+```
+
+## Type Guards
+
+```typescript
+function isError(result: Result): result is ErrorResult {
+  return result.status === 'error'
+}
+```
+
+## OpenAPI Types
+
+Use generated types from API clients:
+```typescript
+import type { Shift } from "@/services/openapi"
+import type { ChatResponse } from "@/services/chats"
+```
+
+Don't recreate types that exist in OpenAPI schema.
+
+## Import Path Aliases
+
+Prefer `@/` over relative imports when navigating more than one level:
+```typescript
+// Good
+import { Button } from "@/components/shared/Button"
+
+// Avoid
+import { Button } from "../../../components/shared/Button"
+```

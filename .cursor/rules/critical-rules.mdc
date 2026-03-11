@@ -1,0 +1,36 @@
+---
+description: Critical project rules - generated files, TypeScript, i18n, navigation
+alwaysApply: true
+---
+
+# Critical Rules
+
+## Generated API Clients - DO NOT EDIT
+
+These directories contain auto-generated code that will be overwritten:
+- `app/services/openapi/` - main API (openapi.yml)
+- `app/services/chats/` - chats API (chats.openapi.yml)
+- `app/services/channels/` - channels API (channels.openapi.yml)
+
+Regenerate with: `npm run openapi:gen`, `npm run openapi:gen:chats`, `npm run openapi:gen:channels`
+
+## TypeScript Strict Mode
+
+- No `any` types - use `unknown` if type truly unknown
+- No `as any` or `as unknown as <Type>` assertions
+- All code must compile without errors
+- Prefer `satisfies` over `as` for type narrowing
+
+## i18n - No Hardcoded Strings
+
+- All user-facing strings use translation keys from `app/i18n/en.ts`
+- Use `useTranslation()` hook in components: `const { t } = useTranslation()`
+- Use `translate()` function only outside components
+- Use interpolation for variables: `t('key', { name: value })`
+
+## Navigation
+
+- Use typed navigation params, never `any` or unsafe casts
+- Route params for IDs/primitives only
+- Use `navigationFlowStore` for screen-to-screen callbacks
+- Never pass functions in route params (not serializable)

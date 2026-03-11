@@ -1,0 +1,55 @@
+---
+description: TanStack Query and API integration patterns
+globs: "app/hooks/**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Data Fetching
+
+## TanStack Query for All API Calls
+
+Never use `useState`/`useEffect` for server data.
+
+```typescript
+export const useItems = (filter: string) => {
+  const { organizationId, enterpriseUuid } = useAuth()
+
+  return useQuery({
+    queryKey: ['items', filter, enterpriseUuid, organizationId],
+    queryFn: filter
+      ? async () => {
+          const response = await ItemService.getItems({ organizationId, enterpriseUuid, filter })
+          return response.items
+        }
+      : skipToken,
+  })
+}
+```
+
+## Query Keys
+
+- Array format: `['entity', param1, param2]`
+- Include ALL parameters that affect the result
+- Collection queries: org/enterprise IDs at END for cache invalidation
+
+## Conditional Queries
+
+1. **Preferred**: Conditionally render component where params are guaranteed
+2. **Alternative**: Use `skipToken` for type safety
+
+```typescript
+queryFn: locationUuid ? () => LocationService.get(locationUuid) : skipToken
+```
+
+## ListView DataSource
+
+Create adapter for list screens:
+```typescript
+const dataSource = {
+  load: async () => filteredData,
+  search: async (text) => data.filter(/* client-side */),
+  delete: async (item) => deleteMutation.mutateAsync(item.id),
+}
+```
+
+Search/filtering is CLIENT-SIDE on cached data - no API calls in DataSource methods.

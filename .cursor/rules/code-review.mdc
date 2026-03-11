@@ -1,0 +1,44 @@
+---
+description: Code review checklist and quality standards
+alwaysApply: true
+---
+
+# Code Review Checklist
+
+## Automatic Rejection
+
+- ANY hard-coded UUIDs, API keys, credentials, tokens
+- ANY `fontSize: spacing.*` usage (use `typography.fontSize.*`)
+- ANY `as any` type assertions
+- ANY hard-coded hex colors (except in theme files)
+- Variables prefixed with `_` that are actually used
+
+## Security & Data
+
+- [ ] No hard-coded UUIDs, org/tenant IDs, API keys
+- [ ] All IDs come from Config, AuthContext, or route params
+- [ ] No `as any` or `as unknown as <Type>` assertions
+
+## Design System
+
+- [ ] All `fontSize:` uses `typography.fontSize.*`
+- [ ] All colors use `theme.colors.*` or `colors.palette.*`
+- [ ] All margins/padding use `spacing.*` values
+- [ ] Semantic color correctness (angry=errors, success=success states)
+
+## Hook Patterns
+
+- [ ] All API calls use TanStack Query hooks
+- [ ] Query keys include ALL parameters affecting result
+- [ ] No unnecessary try-catch (TanStack Query handles errors)
+- [ ] Conditional queries use `skipToken` or conditional rendering
+
+## Variable Naming
+
+- [ ] `_` prefix variables must be unused - remove underscore if used
+
+## Common Mistakes
+
+- `fontSize: spacing.md` → `fontSize: typography.fontSize.md`
+- `locationUuid: 'hard-coded'` → `locationUuid: locationId`
+- Unnecessary `try/catch` around API calls

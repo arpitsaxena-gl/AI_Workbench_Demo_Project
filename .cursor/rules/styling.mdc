@@ -1,0 +1,50 @@
+---
+description: Theme system and styling patterns
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Styling
+
+## Dynamic Theming with useAppTheme()
+
+```typescript
+import { useAppTheme } from '@/theme/context'
+import type { ThemedStyle } from '@/theme/types'
+
+function MyComponent() {
+  const { themed, theme } = useAppTheme()
+
+  return (
+    <View style={themed($container)}>
+      <Text style={themed($text)}>Hello</Text>
+    </View>
+  )
+}
+
+const $container: ThemedStyle<ViewStyle> = (theme) => ({
+  backgroundColor: theme.colors.background,
+  padding: theme.spacing.md,
+})
+
+const $text: ThemedStyle<TextStyle> = (theme) => ({
+  color: theme.colors.text,
+  fontSize: theme.typography.fontSize.sm,
+})
+```
+
+## Critical Rules
+
+- **Never** use hard-coded colors (hex codes) - use `theme.colors.*`
+- **Never** use hard-coded font sizes - use `theme.typography.fontSize.*`
+- **Never** use `spacing.*` for font sizes (common mistake)
+- Use `theme.spacing.*` for margins/paddings only
+
+## Font Sizes
+
+Use: `typography.fontSize.{xxs|xs|sm|md|lg|xl|xxl}` (12, 14, 16, 18, 20, 24, 36)
+
+## Style Naming
+
+- Prefix with `$`: `$container`, `$text`, `$button`
+- Define at component bottom, after the function
