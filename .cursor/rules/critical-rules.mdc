@@ -1,0 +1,68 @@
+---
+description: Critical project rules - TypeScript, routing, and best practices
+alwaysApply: true
+---
+
+# Critical Rules
+
+## TypeScript Strict Mode
+
+- No `any` types - use `unknown` if type truly unknown
+- No `as any` or `as unknown as <Type>` assertions
+- All code must compile without errors
+- Prefer `satisfies` over `as` for type narrowing
+
+## Environment Variables
+
+- Never commit `.env` files with secrets
+- Use `import.meta.env` for Vite environment variables
+- Prefix public variables with `VITE_`
+- Validate environment variables at startup
+
+```typescript
+const API_URL = import.meta.env.VITE_API_URL
+if (!API_URL) throw new Error('VITE_API_URL is required')
+```
+
+## React Router Navigation
+
+- Use typed route parameters
+- Route params for IDs/primitives only
+- Use React Router's `useNavigate` for programmatic navigation
+- Define routes centrally in App.tsx or a routes file
+
+```typescript
+// Good
+navigate('/users/123')
+navigate(-1) // go back
+
+// Avoid
+window.location.href = '/users/123'
+```
+
+## Form Handling
+
+- Use controlled components with proper TypeScript types
+- Validate on submit and optionally on blur
+- Show clear error messages near the relevant fields
+- Disable submit button while submitting
+
+## Performance
+
+- Use React.lazy() for route-based code splitting
+- Virtualize long lists (react-window, TanStack Virtual)
+- Optimize images (WebP, lazy loading)
+- Minimize bundle size with tree shaking
+
+## File Organization
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/          # Route page components
+├── hooks/          # Custom React hooks
+├── theme/          # Theme and styling
+├── utils/          # Utility functions
+├── types/          # TypeScript type definitions
+└── services/       # API services
+```
