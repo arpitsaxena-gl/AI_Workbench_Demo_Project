@@ -7,38 +7,51 @@ alwaysApply: true
 
 ## Automatic Rejection
 
-- ANY hard-coded UUIDs, API keys, credentials, tokens
-- ANY `fontSize: spacing.*` usage (use `typography.fontSize.*`)
+- ANY hard-coded API keys, credentials, tokens, secrets
 - ANY `as any` type assertions
-- ANY hard-coded hex colors (except in theme files)
+- ANY hard-coded hex colors in components (use CSS variables or theme)
 - Variables prefixed with `_` that are actually used
+- Console.log statements left in production code
 
 ## Security & Data
 
-- [ ] No hard-coded UUIDs, org/tenant IDs, API keys
-- [ ] All IDs come from Config, AuthContext, or route params
+- [ ] No hard-coded API keys, tokens, or sensitive data
+- [ ] Environment variables used for configuration
 - [ ] No `as any` or `as unknown as <Type>` assertions
+- [ ] User input is properly validated and sanitized
 
 ## Design System
 
-- [ ] All `fontSize:` uses `typography.fontSize.*`
-- [ ] All colors use `theme.colors.*` or `colors.palette.*`
-- [ ] All margins/padding use `spacing.*` values
-- [ ] Semantic color correctness (angry=errors, success=success states)
+- [ ] All colors use CSS variables or theme values
+- [ ] Consistent spacing using design system tokens
+- [ ] Responsive design with proper breakpoints
+- [ ] Accessible color contrast ratios
 
-## Hook Patterns
+## React Patterns
 
 - [ ] All API calls use TanStack Query hooks
 - [ ] Query keys include ALL parameters affecting result
 - [ ] No unnecessary try-catch (TanStack Query handles errors)
 - [ ] Conditional queries use `skipToken` or conditional rendering
+- [ ] Components follow single responsibility principle
+
+## Accessibility
+
+- [ ] All images have alt text
+- [ ] Form inputs have associated labels
+- [ ] Interactive elements are keyboard accessible
+- [ ] ARIA attributes used correctly where needed
+- [ ] Color is not the only means of conveying information
 
 ## Variable Naming
 
 - [ ] `_` prefix variables must be unused - remove underscore if used
+- [ ] Descriptive variable and function names
+- [ ] Consistent naming conventions (camelCase for variables, PascalCase for components)
 
 ## Common Mistakes
 
-- `fontSize: spacing.md` → `fontSize: typography.fontSize.md`
-- `locationUuid: 'hard-coded'` → `locationUuid: locationId`
-- Unnecessary `try/catch` around API calls
+- Hard-coded colors in style props → Use CSS variables
+- Inline functions in render → Extract to useCallback or define outside
+- Missing key prop in lists → Add unique key
+- Unnecessary try/catch around API calls

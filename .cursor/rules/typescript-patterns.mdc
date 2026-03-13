@@ -12,7 +12,8 @@ Use `interface` for object shapes, props, and extending types:
 ```typescript
 interface ButtonProps {
   title: string
-  onPress: () => void
+  onClick: () => void
+  disabled?: boolean
 }
 ```
 
@@ -40,15 +41,24 @@ function isError(result: Result): result is ErrorResult {
 }
 ```
 
-## OpenAPI Types
+## React Event Types
 
-Use generated types from API clients:
 ```typescript
-import type { Shift } from "@/services/openapi"
-import type { ChatResponse } from "@/services/chats"
-```
+// Form events
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+}
 
-Don't recreate types that exist in OpenAPI schema.
+// Input change events
+const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setValue(e.target.value)
+}
+
+// Click events
+const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  // handle click
+}
+```
 
 ## Import Path Aliases
 
@@ -59,4 +69,17 @@ import { Button } from "@/components/shared/Button"
 
 // Avoid
 import { Button } from "../../../components/shared/Button"
+```
+
+## Generic Components
+
+```typescript
+interface ListProps<T> {
+  items: T[]
+  renderItem: (item: T) => React.ReactNode
+}
+
+function List<T>({ items, renderItem }: ListProps<T>) {
+  return <ul>{items.map(renderItem)}</ul>
+}
 ```

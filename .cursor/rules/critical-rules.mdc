@@ -1,18 +1,9 @@
 ---
-description: Critical project rules - generated files, TypeScript, i18n, navigation
+description: Critical project rules - TypeScript, routing, and best practices
 alwaysApply: true
 ---
 
 # Critical Rules
-
-## Generated API Clients - DO NOT EDIT
-
-These directories contain auto-generated code that will be overwritten:
-- `app/services/openapi/` - main API (openapi.yml)
-- `app/services/chats/` - chats API (chats.openapi.yml)
-- `app/services/channels/` - channels API (channels.openapi.yml)
-
-Regenerate with: `npm run openapi:gen`, `npm run openapi:gen:chats`, `npm run openapi:gen:channels`
 
 ## TypeScript Strict Mode
 
@@ -21,16 +12,57 @@ Regenerate with: `npm run openapi:gen`, `npm run openapi:gen:chats`, `npm run op
 - All code must compile without errors
 - Prefer `satisfies` over `as` for type narrowing
 
-## i18n - No Hardcoded Strings
+## Environment Variables
 
-- All user-facing strings use translation keys from `app/i18n/en.ts`
-- Use `useTranslation()` hook in components: `const { t } = useTranslation()`
-- Use `translate()` function only outside components
-- Use interpolation for variables: `t('key', { name: value })`
+- Never commit `.env` files with secrets
+- Use `import.meta.env` for Vite environment variables
+- Prefix public variables with `VITE_`
+- Validate environment variables at startup
 
-## Navigation
+```typescript
+const API_URL = import.meta.env.VITE_API_URL
+if (!API_URL) throw new Error('VITE_API_URL is required')
+```
 
-- Use typed navigation params, never `any` or unsafe casts
+## React Router Navigation
+
+- Use typed route parameters
 - Route params for IDs/primitives only
-- Use `navigationFlowStore` for screen-to-screen callbacks
-- Never pass functions in route params (not serializable)
+- Use React Router's `useNavigate` for programmatic navigation
+- Define routes centrally in App.tsx or a routes file
+
+```typescript
+// Good
+navigate('/users/123')
+navigate(-1) // go back
+
+// Avoid
+window.location.href = '/users/123'
+```
+
+## Form Handling
+
+- Use controlled components with proper TypeScript types
+- Validate on submit and optionally on blur
+- Show clear error messages near the relevant fields
+- Disable submit button while submitting
+
+## Performance
+
+- Use React.lazy() for route-based code splitting
+- Virtualize long lists (react-window, TanStack Virtual)
+- Optimize images (WebP, lazy loading)
+- Minimize bundle size with tree shaking
+
+## File Organization
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/          # Route page components
+├── hooks/          # Custom React hooks
+├── theme/          # Theme and styling
+├── utils/          # Utility functions
+├── types/          # TypeScript type definitions
+└── services/       # API services
+```

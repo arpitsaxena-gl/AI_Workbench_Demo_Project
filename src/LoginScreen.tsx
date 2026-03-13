@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
-import { ThemeProvider, useTheme } from './theme/context';
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from './theme/context';
+import styles from './LoginScreen.module.css';
 
-function LoginScreenContent() {
+function LoginScreen() {
   const { colors } = useTheme();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -44,12 +36,12 @@ function LoginScreenContent() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
     if (!validateForm()) return;
 
     setIsLoading(true);
     try {
-      // Simulate API call
       await new Promise<void>(resolve => setTimeout(() => resolve(), 1500));
       console.log('Sign in successful', { email, password });
     } catch (error) {
@@ -64,7 +56,7 @@ function LoginScreenContent() {
   };
 
   const handleSignUp = () => {
-    console.log('Sign up pressed');
+    navigate('/signup');
   };
 
   const handleSocialLogin = (provider: string) => {
@@ -72,326 +64,156 @@ function LoginScreenContent() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView
-        contentContainerStyle={[
-          styles.scrollContainer,
-          { backgroundColor: colors.background },
-        ]}
-        keyboardShouldPersistTaps="handled"
-      >
-        <View style={styles.container}>
+    <div className={styles.container} style={{ backgroundColor: colors.background }}>
+      <div className={styles.scrollContainer}>
+        <div className={styles.content}>
           {/* Header */}
-          <View style={styles.header}>
-            <View style={[styles.logoContainer, { backgroundColor: colors.primary }]}>
-              <Text style={styles.logoText}>✦</Text>
-            </View>
-            <Text style={[styles.title, { color: colors.text }]}>Welcome Back</Text>
-            <Text style={[styles.subtitle, { color: colors.secondaryText }]}>
+          <div className={styles.header}>
+            <div className={styles.logoContainer} style={{ backgroundColor: colors.primary }}>
+              <span className={styles.logoText}>✦</span>
+            </div>
+            <h1 className={styles.title} style={{ color: colors.text }}>Welcome Back</h1>
+            <p className={styles.subtitle} style={{ color: colors.secondaryText }}>
               Sign in to continue to your account
-            </Text>
-          </View>
+            </p>
+          </div>
 
           {/* Form */}
-          <View style={styles.form}>
+          <form className={styles.form} onSubmit={handleSignIn}>
             {/* Email Input */}
-            <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: colors.text }]}>Email</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  {
-                    backgroundColor: colors.card,
-                    borderColor: errors.email ? '#ef4444' : colors.border,
-                    color: colors.text,
-                  },
-                ]}
+            <div className={styles.inputContainer}>
+              <label className={styles.label} style={{ color: colors.text }}>Email</label>
+              <input
+                type="email"
+                className={styles.input}
+                style={{
+                  backgroundColor: colors.card,
+                  borderColor: errors.email ? '#ef4444' : colors.border,
+                  color: colors.text,
+                }}
                 placeholder="Enter your email"
-                placeholderTextColor={colors.secondaryText}
                 value={email}
-                onChangeText={(text) => {
-                  setEmail(text);
+                onChange={(e) => {
+                  setEmail(e.target.value);
                   if (errors.email) setErrors({ ...errors, email: undefined });
                 }}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-                accessibilityLabel="Email input"
+                aria-label="Email input"
               />
               {errors.email && (
-                <Text style={styles.errorText}>{errors.email}</Text>
+                <span className={styles.errorText}>{errors.email}</span>
               )}
-            </View>
+            </div>
 
             {/* Password Input */}
-            <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: colors.text }]}>Password</Text>
-              <View style={styles.passwordContainer}>
-                <TextInput
-                  style={[
-                    styles.input,
-                    styles.passwordInput,
-                    {
-                      backgroundColor: colors.card,
-                      borderColor: errors.password ? '#ef4444' : colors.border,
-                      color: colors.text,
-                    },
-                  ]}
+            <div className={styles.inputContainer}>
+              <label className={styles.label} style={{ color: colors.text }}>Password</label>
+              <div className={styles.passwordContainer}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  className={`${styles.input} ${styles.passwordInput}`}
+                  style={{
+                    backgroundColor: colors.card,
+                    borderColor: errors.password ? '#ef4444' : colors.border,
+                    color: colors.text,
+                  }}
                   placeholder="Enter your password"
-                  placeholderTextColor={colors.secondaryText}
                   value={password}
-                  onChangeText={(text) => {
-                    setPassword(text);
+                  onChange={(e) => {
+                    setPassword(e.target.value);
                     if (errors.password) setErrors({ ...errors, password: undefined });
                   }}
-                  secureTextEntry={!showPassword}
-                  accessibilityLabel="Password input"
+                  aria-label="Password input"
                 />
-                <TouchableOpacity
-                  style={styles.eyeButton}
-                  onPress={() => setShowPassword(!showPassword)}
-                  accessibilityLabel={showPassword ? 'Hide password' : 'Show password'}
+                <button
+                  type="button"
+                  className={styles.eyeButton}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
-                  <Text style={{ color: colors.secondaryText, fontSize: 16 }}>
+                  <span style={{ color: colors.secondaryText, fontSize: 16 }}>
                     {showPassword ? '👁️' : '👁️‍🗨️'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
+                  </span>
+                </button>
+              </div>
               {errors.password && (
-                <Text style={styles.errorText}>{errors.password}</Text>
+                <span className={styles.errorText}>{errors.password}</span>
               )}
-            </View>
+            </div>
 
             {/* Forgot Password */}
-            <TouchableOpacity
-              style={styles.forgotPassword}
-              onPress={handleForgotPassword}
-              accessibilityRole="link"
+            <button
+              type="button"
+              className={styles.forgotPassword}
+              onClick={handleForgotPassword}
             >
-              <Text style={[styles.forgotPasswordText, { color: colors.primary }]}>
+              <span className={styles.forgotPasswordText} style={{ color: colors.primary }}>
                 Forgot Password?
-              </Text>
-            </TouchableOpacity>
+              </span>
+            </button>
 
             {/* Sign In Button */}
-            <TouchableOpacity
-              style={[
-                styles.button,
-                { backgroundColor: colors.primary },
-                isLoading && styles.buttonDisabled,
-              ]}
-              onPress={handleSignIn}
+            <button
+              type="submit"
+              className={`${styles.button} ${isLoading ? styles.buttonDisabled : ''}`}
+              style={{ backgroundColor: colors.primary }}
               disabled={isLoading}
-              accessibilityRole="button"
-              accessibilityLabel="Sign In"
+              aria-label="Sign In"
             >
               {isLoading ? (
-                <ActivityIndicator color="#ffffff" />
+                <span className={styles.spinner} />
               ) : (
-                <Text style={styles.buttonText}>Sign In</Text>
+                <span className={styles.buttonText}>Sign In</span>
               )}
-            </TouchableOpacity>
+            </button>
 
             {/* Divider */}
-            <View style={styles.dividerContainer}>
-              <View style={[styles.divider, { backgroundColor: colors.border }]} />
-              <Text style={[styles.dividerText, { color: colors.secondaryText }]}>
+            <div className={styles.dividerContainer}>
+              <div className={styles.divider} style={{ backgroundColor: colors.border }} />
+              <span className={styles.dividerText} style={{ color: colors.secondaryText }}>
                 or continue with
-              </Text>
-              <View style={[styles.divider, { backgroundColor: colors.border }]} />
-            </View>
+              </span>
+              <div className={styles.divider} style={{ backgroundColor: colors.border }} />
+            </div>
 
             {/* Social Login Buttons */}
-            <View style={styles.socialContainer}>
-              <TouchableOpacity
-                style={[styles.socialButton, { borderColor: colors.border }]}
-                onPress={() => handleSocialLogin('Google')}
-                accessibilityRole="button"
-                accessibilityLabel="Sign in with Google"
+            <div className={styles.socialContainer}>
+              <button
+                type="button"
+                className={styles.socialButton}
+                style={{ borderColor: colors.border }}
+                onClick={() => handleSocialLogin('Google')}
+                aria-label="Sign in with Google"
               >
-                <Text style={styles.socialIcon}>G</Text>
-                <Text style={[styles.socialText, { color: colors.text }]}>Google</Text>
-              </TouchableOpacity>
+                <span className={styles.socialIcon}>G</span>
+                <span className={styles.socialText} style={{ color: colors.text }}>Google</span>
+              </button>
 
-              <TouchableOpacity
-                style={[styles.socialButton, { borderColor: colors.border }]}
-                onPress={() => handleSocialLogin('Apple')}
-                accessibilityRole="button"
-                accessibilityLabel="Sign in with Apple"
+              <button
+                type="button"
+                className={styles.socialButton}
+                style={{ borderColor: colors.border }}
+                onClick={() => handleSocialLogin('Apple')}
+                aria-label="Sign in with Apple"
               >
-                <Text style={styles.socialIcon}>🍎</Text>
-                <Text style={[styles.socialText, { color: colors.text }]}>Apple</Text>
-              </TouchableOpacity>
-            </View>
+                <span className={styles.socialIcon}>🍎</span>
+                <span className={styles.socialText} style={{ color: colors.text }}>Apple</span>
+              </button>
+            </div>
 
             {/* Sign Up Link */}
-            <View style={styles.signUpContainer}>
-              <Text style={[styles.signUpText, { color: colors.secondaryText }]}>
+            <div className={styles.signUpContainer}>
+              <span className={styles.signUpText} style={{ color: colors.secondaryText }}>
                 Don't have an account?{' '}
-              </Text>
-              <TouchableOpacity onPress={handleSignUp} accessibilityRole="link">
-                <Text style={[styles.signUpLink, { color: colors.primary }]}>
-                  Sign Up
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+              </span>
+              <button type="button" onClick={handleSignUp} className={styles.signUpLink}>
+                <span style={{ color: colors.primary }}>Sign Up</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default function LoginScreen() {
-  return (
-    <ThemeProvider>
-      <LoginScreenContent />
-    </ThemeProvider>
-  );
-}
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 40,
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  logoContainer: {
-    width: 64,
-    height: 64,
-    borderRadius: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  logoText: {
-    fontSize: 32,
-    color: '#ffffff',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-  },
-  form: {
-    width: '100%',
-  },
-  inputContainer: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  input: {
-    height: 52,
-    borderWidth: 1,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    fontSize: 16,
-  },
-  passwordContainer: {
-    position: 'relative',
-  },
-  passwordInput: {
-    paddingRight: 50,
-  },
-  eyeButton: {
-    position: 'absolute',
-    right: 16,
-    top: 0,
-    bottom: 0,
-    justifyContent: 'center',
-  },
-  errorText: {
-    color: '#ef4444',
-    fontSize: 12,
-    marginTop: 4,
-  },
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginBottom: 24,
-  },
-  forgotPasswordText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  button: {
-    height: 52,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonDisabled: {
-    opacity: 0.7,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  dividerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 24,
-  },
-  divider: {
-    flex: 1,
-    height: 1,
-  },
-  dividerText: {
-    paddingHorizontal: 16,
-    fontSize: 14,
-  },
-  socialContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 12,
-  },
-  socialButton: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 52,
-    borderRadius: 12,
-    borderWidth: 1,
-    gap: 8,
-  },
-  socialIcon: {
-    fontSize: 18,
-  },
-  socialText: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  signUpContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 32,
-  },
-  signUpText: {
-    fontSize: 14,
-  },
-  signUpLink: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-});
+export default LoginScreen;

@@ -1,0 +1,170 @@
+---
+description: Guidelines for writing tests in React applications
+globs: "**/*.test.{ts,tsx}"
+alwaysApply: false
+---
+
+# Writing Tests
+
+## Testing Stack
+
+- **Vitest** - Test runner
+- **@testing-library/react** - Component testing
+- **@testing-library/jest-dom** - DOM matchers
+
+## Test File Location
+
+Place test files next to the component they test:
+```
+src/
+├── LoginScreen.tsx
+├── LoginScreen.test.tsx
+├── LoginScreen.module.css
+```
+
+## Basic Test Structure
+
+```typescript
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from './theme/context';
+import MyComponent from './MyComponent';
+
+const renderWithProviders = (component: React.ReactElement) => {
+  return render(
+    <ThemeProvider>
+      <BrowserRouter>
+        {component}
+      </BrowserRouter>
+    </ThemeProvider>
+  );
+};
+
+describe('MyComponent', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders correctly', () => {
+    renderWithProviders(<MyComponent />);
+    expect(screen.getByText('Expected Text')).toBeInTheDocument();
+  });
+});
+```
+
+## What to Test
+
+### Components
+- Renders without crashing
+- Displays correct content based on props
+- User interactions work correctly
+- Loading and error states
+- Conditional rendering
+
+### Forms
+- Input fields update on change
+- Validation errors display correctly
+- Form submission works
+- Submit button disabled during loading
+
+### Hooks
+- Returns correct initial state
+- Updates state correctly
+- Handles errors
+
+## Testing Patterns
+
+### User Interactions
+
+```typescript
+it('handles button click', () => {
+  const handleClick = vi.fn();
+  render(<Button onClick={handleClick}>Click me</Button>);
+  
+  fireEvent.click(screen.getByRole('button', { name: 'Click me' }));
+  
+  expect(handleClick).toHaveBeenCalledTimes(1);
+});
+```
+
+### Form Input
+
+```typescript
+it('updates input value', () => {
+  render(<LoginForm />);
+  
+  const emailInput = screen.getByLabelText('Email') as HTMLInputElement;
+  fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+  
+  expect(emailInput.value).toBe('test@example.com');
+});
+```
+
+### Async Operations
+
+```typescript
+it('loads data successfully', async () => {
+  render(<DataComponent />);
+  
+  // Wait for loading to finish
+  await waitFor(() => {
+    expect(screen.getByText('Data loaded')).toBeInTheDocument();
+  });
+});
+```
+
+### Mocking
+
+```typescript
+// Mock a module
+vi.mock('./api', () => ({
+  fetchData: vi.fn().mockResolvedValue({ data: 'test' }),
+}));
+
+// Mock console methods
+const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+// Mock navigation
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockNavigate,
+  };
+});
+```
+
+## Query Priority
+
+Use queries in this order (most to least preferred):
+1. `getByRole` - Accessible to everyone
+2. `getByLabelText` - Good for form fields
+3. `getByPlaceholderText` - When label not available
+4. `getByText` - For non-interactive elements
+5. `getByTestId` - Last resort
+
+## Avoid
+
+- Testing implementation details
+- Testing third-party libraries
+- Snapshot tests for complex components
+- Testing CSS classes directly
+- Over-mocking (test real behavior when possible)
+
+## Running Tests
+
+```bash
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm test -- --watch
+
+# Run specific test file
+npm test -- LoginScreen.test.tsx
+
+# Run with coverage
+npm test -- --coverage
+```

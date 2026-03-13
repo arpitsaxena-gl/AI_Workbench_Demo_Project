@@ -1,5 +1,5 @@
 ---
-description: React and React Native component patterns
+description: React component patterns and best practices
 globs: "**/*.tsx"
 alwaysApply: false
 ---
@@ -16,7 +16,7 @@ alwaysApply: false
 ## State Management
 
 - **Server state**: TanStack Query (in hooks)
-- **Global client state**: TanStack Store
+- **Global client state**: TanStack Store or React Context
 - **Local UI state**: `useState`
 - Keep state as local as possible
 
@@ -39,13 +39,21 @@ Split components to guarantee data availability without effects:
 ```typescript
 function MyPanel() {
   const { data, isPending } = useMyQuery()
-  if (isPending || !data) return <ActivityIndicator />
+  if (isPending || !data) return <LoadingSpinner />
   return <MyPanelContent data={data} />
 }
 ```
 
 ## Performance
 
-- React Compiler handles memoization - don't use `useCallback`/`useMemo` manually
-- Use `getItemLayout` on FlatList for fixed-height items
-- Provide stable `keyExtractor` keys (never array index for changing lists)
+- React 19 Compiler handles memoization - don't use `useCallback`/`useMemo` manually
+- Use virtualization (e.g., react-window, TanStack Virtual) for long lists
+- Provide stable `key` props (never array index for changing lists)
+- Lazy load routes and heavy components with `React.lazy()`
+
+## React Router
+
+- Use `useNavigate()` for programmatic navigation
+- Use `useParams()` for route parameters
+- Use `<Link>` component for declarative navigation
+- Define routes in a centralized location

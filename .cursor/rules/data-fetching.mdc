@@ -1,6 +1,6 @@
 ---
 description: TanStack Query and API integration patterns
-globs: "app/hooks/**/*.{ts,tsx}"
+globs: "src/hooks/**/*.{ts,tsx}"
 alwaysApply: false
 ---
 
@@ -12,14 +12,12 @@ Never use `useState`/`useEffect` for server data.
 
 ```typescript
 export const useItems = (filter: string) => {
-  const { organizationId, enterpriseUuid } = useAuth()
-
   return useQuery({
-    queryKey: ['items', filter, enterpriseUuid, organizationId],
+    queryKey: ['items', filter],
     queryFn: filter
       ? async () => {
-          const response = await ItemService.getItems({ organizationId, enterpriseUuid, filter })
-          return response.items
+          const response = await fetch(`/api/items?filter=${filter}`)
+          return response.json()
         }
       : skipToken,
   })
@@ -30,7 +28,7 @@ export const useItems = (filter: string) => {
 
 - Array format: `['entity', param1, param2]`
 - Include ALL parameters that affect the result
-- Collection queries: org/enterprise IDs at END for cache invalidation
+- Use consistent key structure for cache invalidation
 
 ## Conditional Queries
 
@@ -38,18 +36,41 @@ export const useItems = (filter: string) => {
 2. **Alternative**: Use `skipToken` for type safety
 
 ```typescript
-queryFn: locationUuid ? () => LocationService.get(locationUuid) : skipToken
+queryFn: userId ? () => UserService.get(userId) : skipToken
 ```
 
-## ListView DataSource
+## Mutations
 
-Create adapter for list screens:
 ```typescript
-const dataSource = {
-  load: async () => filteredData,
-  search: async (text) => data.filter(/* client-side */),
-  delete: async (item) => deleteMutation.mutateAsync(item.id),
+const createItemMutation = useMutation({
+  mutationFn: (newItem: CreateItemInput) => ItemService.create(newItem),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['items'] })
+  },
+})
+```
+
+## Loading and Error States
+
+```typescript
+function ItemList() {
+  const { data, isPending, isError, error } = useItems()
+
+  if (isPending) return <LoadingSpinner />
+  if (isError) return <ErrorMessage error={error} />
+
+  return <ul>{data.map(item => <li key={item.id}>{item.name}</li>)}</ul>
 }
 ```
 
-Search/filtering is CLIENT-SIDE on cached data - no API calls in DataSource methods.
+## Fetch API Best Practices
+
+```typescript
+const fetchData = async <T>(url: string): Promise<T> => {
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
+  return response.json()
+}
+```

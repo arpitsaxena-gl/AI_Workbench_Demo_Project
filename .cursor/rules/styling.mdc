@@ -1,50 +1,73 @@
 ---
-description: Theme system and styling patterns
+description: Theme system and styling patterns for React web
 globs: "**/*.tsx"
 alwaysApply: false
 ---
 
 # Styling
 
-## Dynamic Theming with useAppTheme()
+## CSS Modules (Recommended)
 
 ```typescript
-import { useAppTheme } from '@/theme/context'
-import type { ThemedStyle } from '@/theme/types'
+import styles from './MyComponent.module.css'
 
 function MyComponent() {
-  const { themed, theme } = useAppTheme()
-
   return (
-    <View style={themed($container)}>
-      <Text style={themed($text)}>Hello</Text>
-    </View>
+    <div className={styles.container}>
+      <p className={styles.text}>Hello</p>
+    </div>
   )
 }
+```
 
-const $container: ThemedStyle<ViewStyle> = (theme) => ({
-  backgroundColor: theme.colors.background,
-  padding: theme.spacing.md,
-})
+## Dynamic Theming with useTheme()
 
-const $text: ThemedStyle<TextStyle> = (theme) => ({
-  color: theme.colors.text,
-  fontSize: theme.typography.fontSize.sm,
-})
+```typescript
+import { useTheme } from '@/theme/context'
+
+function MyComponent() {
+  const { colors, isDarkMode } = useTheme()
+
+  return (
+    <div style={{ backgroundColor: colors.background }}>
+      <p style={{ color: colors.text }}>Hello</p>
+    </div>
+  )
+}
+```
+
+## CSS Custom Properties
+
+Define theme values as CSS variables in `:root`:
+```css
+:root {
+  --background: #f8f9fa;
+  --text: #1a1a1a;
+  --primary: #4A90E2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --text: #ffffff;
+  }
+}
 ```
 
 ## Critical Rules
 
-- **Never** use hard-coded colors (hex codes) - use `theme.colors.*`
-- **Never** use hard-coded font sizes - use `theme.typography.fontSize.*`
-- **Never** use `spacing.*` for font sizes (common mistake)
-- Use `theme.spacing.*` for margins/paddings only
+- **Never** use hard-coded colors (hex codes) in components - use CSS variables or theme
+- **Never** use hard-coded font sizes - use design system tokens
+- Use CSS Modules for component-specific styles
+- Use global CSS for base styles and CSS custom properties
 
-## Font Sizes
+## Responsive Design
 
-Use: `typography.fontSize.{xxs|xs|sm|md|lg|xl|xxl}` (12, 14, 16, 18, 20, 24, 36)
+- Use CSS media queries for responsive layouts
+- Mobile-first approach: start with mobile styles, add breakpoints for larger screens
+- Common breakpoints: 480px (mobile), 768px (tablet), 1024px (desktop)
 
-## Style Naming
+## Class Naming (CSS Modules)
 
-- Prefix with `$`: `$container`, `$text`, `$button`
-- Define at component bottom, after the function
+- Use camelCase: `container`, `headerTitle`, `buttonPrimary`
+- Keep names descriptive and component-scoped
