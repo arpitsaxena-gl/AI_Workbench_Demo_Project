@@ -71,3 +71,9 @@ input {
 input:focus {
   border-color: var(--primary);
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './theme/context';
+import { useAuth } from './auth/context';
 import styles from './SignupScreen.module.css';
 
 interface FormErrors {
@@ -9,10 +10,12 @@ interface FormErrors {
   password?: string;
   confirmPassword?: string;
   terms?: string;
+  submit?: string;
 }
 
 function SignupScreen() {
   const { colors } = useTheme();
+  const { signup, isAuthenticated, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -70,14 +73,19 @@ function SignupScreen() {
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    clearFieldError('submit');
     if (!validateForm()) return;
 
     setIsLoading(true);
     try {
-      await new Promise<void>(resolve => setTimeout(() => resolve(), 1500));
-      console.log('Sign up successful', { fullName, email, password });
+      const result = await signup(fullName.trim(), email.trim(), password);
+      if (result.success) {
+        navigate('/', { replace: true });
+      } else {
+        setErrors(prev => ({ ...prev, submit: result.error ?? 'Sign up failed' }));
+      }
     } catch (error) {
-      console.error('Sign up failed', error);
+      setErrors(prev => ({ ...prev, submit: 'Something went wrong. Please try again.' }));
     } finally {
       setIsLoading(false);
     }
@@ -90,6 +98,12 @@ function SignupScreen() {
   const handleSocialSignup = (provider: string) => {
     console.log(`${provider} signup pressed`);
   };
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, authLoading, navigate]);
 
   const handleTermsPress = () => {
     console.log('Terms and conditions pressed');
@@ -283,12 +297,18 @@ function SignupScreen() {
               <span className={`${styles.errorText} ${styles.termsError}`}>{errors.terms}</span>
             )}
 
+            {errors.submit && (
+              <div className={styles.inputContainer}>
+                <span className={styles.errorText}>{errors.submit}</span>
+              </div>
+            )}
+
             {/* Sign Up Button */}
             <button
               type="submit"
               className={`${styles.button} ${isLoading ? styles.buttonDisabled : ''}`}
               style={{ backgroundColor: colors.primary }}
-              disabled={isLoading}
+              disabled={isLoading || authLoading}
               aria-label="Sign Up"
             >
               {isLoading ? (

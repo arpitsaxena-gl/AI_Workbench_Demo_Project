@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './theme/context';
+import { useAuth } from './auth/context';
 import styles from './HomeScreen.module.css';
 
 const statsData = [
@@ -68,10 +69,14 @@ const notifications = [
 
 const HomeScreen: React.FC = () => {
   const { colors, isDarkMode } = useTheme();
+  const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const handleLoginPress = () => {
-    navigate('/login');
+  const handleLoginPress = () => navigate('/login');
+  const handleProfilePress = () => navigate('/profile');
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
   };
 
   return (
@@ -80,32 +85,78 @@ const HomeScreen: React.FC = () => {
         {/* Header Section */}
         <header className={styles.header}>
           <div>
-            <p className={styles.greeting} style={{ color: colors.secondaryText }}>Good Morning</p>
+            <p className={styles.greeting} style={{ color: colors.secondaryText }}>
+              {isAuthenticated && user ? `Hello, ${user.fullName.split(/\s+/)[0]}` : 'Good Morning'}
+            </p>
             <h1 className={styles.headerTitle} style={{ color: colors.text }}>
-              Welcome Back! 👋
+              {isAuthenticated ? 'Welcome Back! 👋' : 'Welcome! 👋'}
             </h1>
           </div>
           <div className={styles.headerActions}>
-            <button
-              className={styles.loginButton}
-              onClick={handleLoginPress}
-              aria-label="Login"
-            >
-              Login
-            </button>
-            <button
-              className={styles.iconButton}
-              style={{ backgroundColor: colors.card, borderColor: colors.border }}
-            >
-              <span className={styles.iconButtonText}>🔔</span>
-              <span className={styles.notificationBadge}>3</span>
-            </button>
-            <button
-              className={styles.iconButton}
-              style={{ backgroundColor: colors.card, borderColor: colors.border }}
-            >
-              <span className={styles.iconButtonText}>⚙️</span>
-            </button>
+            {isAuthenticated ? (
+              <>
+                <button
+                  className={styles.loginButton}
+                  onClick={handleProfilePress}
+                  aria-label="Profile"
+                  style={{ backgroundColor: colors.primary }}
+                >
+                  Profile
+                </button>
+                <button
+                  className={styles.iconButton}
+                  style={{ backgroundColor: colors.card, borderColor: colors.border }}
+                  onClick={handleProfilePress}
+                  aria-label="Profile"
+                >
+                  <span className={styles.iconButtonText}>👤</span>
+                </button>
+                <button
+                  className={styles.iconButton}
+                  style={{ backgroundColor: colors.card, borderColor: colors.border }}
+                >
+                  <span className={styles.iconButtonText}>🔔</span>
+                  <span className={styles.notificationBadge}>3</span>
+                </button>
+                <button
+                  className={styles.iconButton}
+                  style={{ backgroundColor: colors.card, borderColor: colors.border }}
+                >
+                  <span className={styles.iconButtonText}>⚙️</span>
+                </button>
+                <button
+                  className={styles.loginButton}
+                  onClick={handleLogout}
+                  aria-label="Log out"
+                  style={{ backgroundColor: 'transparent', border: `1px solid ${colors.border}`, color: colors.text }}
+                >
+                  Log out
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  className={styles.loginButton}
+                  onClick={handleLoginPress}
+                  aria-label="Login"
+                >
+                  Login
+                </button>
+                <button
+                  className={styles.iconButton}
+                  style={{ backgroundColor: colors.card, borderColor: colors.border }}
+                >
+                  <span className={styles.iconButtonText}>🔔</span>
+                  <span className={styles.notificationBadge}>3</span>
+                </button>
+                <button
+                  className={styles.iconButton}
+                  style={{ backgroundColor: colors.card, borderColor: colors.border }}
+                >
+                  <span className={styles.iconButtonText}>⚙️</span>
+                </button>
+              </>
+            )}
           </div>
         </header>
 
