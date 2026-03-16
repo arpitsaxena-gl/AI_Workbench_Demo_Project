@@ -4,13 +4,22 @@
   --card: #ffffff;
   --secondary-text: #6b7280;
   --border: #e5e7eb;
-  --primary: #4A90E2;
+  --primary: #4a90e2;
   --error: #ef4444;
-  --success: #50C878;
-  --warning: #FFA500;
+  --success: #50c878;
+  --warning: #ffa500;
 
-  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family:
+    'Segoe UI',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
     sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -36,7 +45,9 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
 }
@@ -44,7 +55,9 @@ html, body, #root {
 body {
   background-color: var(--background);
   color: var(--text);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 a {

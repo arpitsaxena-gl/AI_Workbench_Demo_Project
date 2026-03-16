@@ -39,7 +39,7 @@
 .loginButton {
   padding: 10px 16px;
   border-radius: 20px;
-  background-color: #4A90E2;
+  background-color: #4a90e2;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -75,7 +75,7 @@
   position: absolute;
   top: 4px;
   right: 4px;
-  background-color: #FF6B6B;
+  background-color: #ff6b6b;
   border-radius: 10px;
   min-width: 20px;
   height: 20px;
@@ -200,7 +200,9 @@
   align-items: center;
   justify-content: center;
   min-height: 100px;
-  transition: transform 0.2s, opacity 0.2s;
+  transition:
+    transform 0.2s,
+    opacity 0.2s;
 }
 
 .quickActionButton:hover {
@@ -317,7 +319,7 @@
   right: 8px;
   padding: 4px 8px;
   border-radius: 12px;
-  background-color: #FF6B6B;
+  background-color: #ff6b6b;
   color: #ffffff;
   font-size: 10px;
   font-weight: bold;
@@ -512,7 +514,7 @@
   width: 8px;
   height: 8px;
   border-radius: 4px;
-  background-color: #4A90E2;
+  background-color: #4a90e2;
 }
 
 .notificationDescription {
@@ -577,8 +579,8 @@
 }
 
 .formButtonPrimary {
-  background-color: #4A90E2;
-  border: 1px solid #4A90E2;
+  background-color: #4a90e2;
+  border: 1px solid #4a90e2;
   color: #ffffff;
 }
 

@@ -11,21 +11,25 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   if (isLoading) {
     return (
-      <div style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'var(--background)',
-      }}>
-        <div style={{
-          width: 32,
-          height: 32,
-          border: '3px solid var(--border)',
-          borderTopColor: 'var(--primary)',
-          borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite',
-        }} />
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'var(--background)',
+        }}
+      >
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            border: '3px solid var(--border)',
+            borderTopColor: 'var(--primary)',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite',
+          }}
+        />
       </div>
     );
   }

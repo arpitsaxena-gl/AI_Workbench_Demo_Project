@@ -1,4 +1,11 @@
-import { createContext, useContext, ReactNode, useState, useEffect, useCallback } from 'react';
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 
 const AUTH_STORAGE_KEY = 'myproject_auth_user';
 
@@ -12,8 +19,16 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string, fullName?: string) => Promise<{ success: boolean; error?: string }>;
-  signup: (fullName: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  login: (
+    email: string,
+    password: string,
+    fullName?: string,
+  ) => Promise<{ success: boolean; error?: string }>;
+  signup: (
+    fullName: string,
+    email: string,
+    password: string,
+  ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
 }
 
@@ -48,16 +63,23 @@ function getStoredUsers(): Map<string, { fullName: string; password: string }> {
   try {
     const raw = localStorage.getItem('myproject_demo_users');
     if (!raw) return new Map();
-    const arr = JSON.parse(raw) as Array<[string, { fullName: string; password: string }]>;
+    const arr = JSON.parse(raw) as Array<
+      [string, { fullName: string; password: string }]
+    >;
     return new Map(arr);
   } catch {
     return new Map();
   }
 }
 
-function setStoredUsers(map: Map<string, { fullName: string; password: string }>) {
+function setStoredUsers(
+  map: Map<string, { fullName: string; password: string }>,
+) {
   if (typeof window === 'undefined') return;
-  localStorage.setItem('myproject_demo_users', JSON.stringify([...map.entries()]));
+  localStorage.setItem(
+    'myproject_demo_users',
+    JSON.stringify([...map.entries()]),
+  );
 }
 
 interface AuthProviderProps {
@@ -74,44 +96,56 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setIsLoading(false);
   }, []);
 
-  const login = useCallback(async (email: string, password: string): Promise<{ success: boolean; error?: string }> => {
-    const users = getStoredUsers();
-    const normalizedEmail = email.trim().toLowerCase();
-    const record = users.get(normalizedEmail);
-    if (!record || record.password !== password) {
-      return { success: false, error: 'Invalid email or password' };
-    }
-    const userData: User = {
-      id: normalizedEmail,
-      email: normalizedEmail,
-      fullName: record.fullName,
-    };
-    setUser(userData);
-    saveUserToStorage(userData);
-    return { success: true };
-  }, []);
+  const login = useCallback(
+    async (
+      email: string,
+      password: string,
+    ): Promise<{ success: boolean; error?: string }> => {
+      const users = getStoredUsers();
+      const normalizedEmail = email.trim().toLowerCase();
+      const record = users.get(normalizedEmail);
+      if (!record || record.password !== password) {
+        return { success: false, error: 'Invalid email or password' };
+      }
+      const userData: User = {
+        id: normalizedEmail,
+        email: normalizedEmail,
+        fullName: record.fullName,
+      };
+      setUser(userData);
+      saveUserToStorage(userData);
+      return { success: true };
+    },
+    [],
+  );
 
-  const signup = useCallback(async (
-    fullName: string,
-    email: string,
-    password: string
-  ): Promise<{ success: boolean; error?: string }> => {
-    const users = getStoredUsers();
-    const normalizedEmail = email.trim().toLowerCase();
-    if (users.has(normalizedEmail)) {
-      return { success: false, error: 'An account with this email already exists' };
-    }
-    users.set(normalizedEmail, { fullName: fullName.trim(), password });
-    setStoredUsers(users);
-    const userData: User = {
-      id: normalizedEmail,
-      email: normalizedEmail,
-      fullName: fullName.trim(),
-    };
-    setUser(userData);
-    saveUserToStorage(userData);
-    return { success: true };
-  }, []);
+  const signup = useCallback(
+    async (
+      fullName: string,
+      email: string,
+      password: string,
+    ): Promise<{ success: boolean; error?: string }> => {
+      const users = getStoredUsers();
+      const normalizedEmail = email.trim().toLowerCase();
+      if (users.has(normalizedEmail)) {
+        return {
+          success: false,
+          error: 'An account with this email already exists',
+        };
+      }
+      users.set(normalizedEmail, { fullName: fullName.trim(), password });
+      setStoredUsers(users);
+      const userData: User = {
+        id: normalizedEmail,
+        email: normalizedEmail,
+        fullName: fullName.trim(),
+      };
+      setUser(userData);
+      saveUserToStorage(userData);
+      return { success: true };
+    },
+    [],
+  );
 
   const logout = useCallback(() => {
     setUser(null);
