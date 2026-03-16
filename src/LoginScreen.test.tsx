@@ -3,12 +3,15 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from './theme/context';
+import { AuthProvider } from './auth/context';
 import LoginScreen from './LoginScreen';
 
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
     <ThemeProvider>
-      <BrowserRouter>{component}</BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>{component}</BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>,
   );
 };
@@ -43,9 +46,7 @@ describe('LoginScreen', () => {
     expect(passwordInput.type).toBe('password');
   });
 
-  it('submits current credentials when sign in is pressed', async () => {
-    const logSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-
+  it('shows error when sign in with wrong credentials', async () => {
     renderWithProviders(<LoginScreen />);
 
     const emailInput = screen.getByLabelText('Email input');
@@ -60,15 +61,12 @@ describe('LoginScreen', () => {
 
     await waitFor(
       () => {
-        expect(logSpy).toHaveBeenCalledWith('Sign in successful', {
-          email: 'agent@example.com',
-          password: 'credential-value-123',
-        });
+        expect(
+          screen.getByText('Invalid email or password'),
+        ).toBeInTheDocument();
       },
       { timeout: 2000 },
     );
-
-    logSpy.mockRestore();
   });
 
   it('shows validation errors for empty fields', () => {
