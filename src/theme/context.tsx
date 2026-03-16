@@ -1,4 +1,10 @@
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from 'react';
 
 interface ThemeColors {
   background: string;
@@ -65,12 +71,29 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.setProperty('--background', isDarkMode ? darkColors.background : lightColors.background);
-    document.documentElement.style.setProperty('--text', isDarkMode ? darkColors.text : lightColors.text);
-    document.documentElement.style.setProperty('--card', isDarkMode ? darkColors.card : lightColors.card);
-    document.documentElement.style.setProperty('--secondary-text', isDarkMode ? darkColors.secondaryText : lightColors.secondaryText);
-    document.documentElement.style.setProperty('--border', isDarkMode ? darkColors.border : lightColors.border);
-    document.body.style.backgroundColor = isDarkMode ? darkColors.background : lightColors.background;
+    document.documentElement.style.setProperty(
+      '--background',
+      isDarkMode ? darkColors.background : lightColors.background,
+    );
+    document.documentElement.style.setProperty(
+      '--text',
+      isDarkMode ? darkColors.text : lightColors.text,
+    );
+    document.documentElement.style.setProperty(
+      '--card',
+      isDarkMode ? darkColors.card : lightColors.card,
+    );
+    document.documentElement.style.setProperty(
+      '--secondary-text',
+      isDarkMode ? darkColors.secondaryText : lightColors.secondaryText,
+    );
+    document.documentElement.style.setProperty(
+      '--border',
+      isDarkMode ? darkColors.border : lightColors.border,
+    );
+    document.body.style.backgroundColor = isDarkMode
+      ? darkColors.background
+      : lightColors.background;
     document.body.style.color = isDarkMode ? darkColors.text : lightColors.text;
   }, [isDarkMode]);
 

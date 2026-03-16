@@ -16,16 +16,20 @@ export default function ProfileScreen() {
     navigate('/login', { replace: true });
   };
 
-  const initials = user.fullName
-    .trim()
-    .split(/\s+/)
-    .map((s) => s[0])
-    .join('')
-    .toUpperCase()
-    .slice(0, 2) || user.email[0].toUpperCase();
+  const initials =
+    user.fullName
+      .trim()
+      .split(/\s+/)
+      .map(s => s[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) || user.email[0].toUpperCase();
 
   return (
-    <div className={styles.container} style={{ backgroundColor: colors.background }}>
+    <div
+      className={styles.container}
+      style={{ backgroundColor: colors.background }}
+    >
       <div className={styles.scrollContent}>
         <header className={styles.header}>
           <button
@@ -68,16 +72,28 @@ export default function ProfileScreen() {
             className={styles.infoCard}
             style={{ backgroundColor: colors.card, borderColor: colors.border }}
           >
-            <div className={styles.infoRow} style={{ borderBottomColor: colors.border }}>
-              <span className={styles.infoLabel} style={{ color: colors.secondaryText }}>
+            <div
+              className={styles.infoRow}
+              style={{ borderBottomColor: colors.border }}
+            >
+              <span
+                className={styles.infoLabel}
+                style={{ color: colors.secondaryText }}
+              >
                 Full name
               </span>
               <span className={styles.infoValue} style={{ color: colors.text }}>
                 {user.fullName}
               </span>
             </div>
-            <div className={styles.infoRow} style={{ borderBottomColor: colors.border }}>
-              <span className={styles.infoLabel} style={{ color: colors.secondaryText }}>
+            <div
+              className={styles.infoRow}
+              style={{ borderBottomColor: colors.border }}
+            >
+              <span
+                className={styles.infoLabel}
+                style={{ color: colors.secondaryText }}
+              >
                 Email
               </span>
               <span className={styles.infoValue} style={{ color: colors.text }}>
@@ -85,7 +101,10 @@ export default function ProfileScreen() {
               </span>
             </div>
             <div className={styles.infoRow}>
-              <span className={styles.infoLabel} style={{ color: colors.secondaryText }}>
+              <span
+                className={styles.infoLabel}
+                style={{ color: colors.secondaryText }}
+              >
                 Account ID
               </span>
               <span className={styles.infoValue} style={{ color: colors.text }}>
