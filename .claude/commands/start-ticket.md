@@ -1,6 +1,10 @@
 # Start Ticket
 
-Analyze a new ticket against Blitzy-generated code to determine what work has already been done and what gaps need to be filled.
+Analyze a new ticket against existing implementation to find any duplicates or overlap, then create or extend work as per the description.
+
+**Apply this process regardless of programming language, framework, or stack.** Works with any codebase (JavaScript, Python, Java, C#, Go, Rust, Swift, Kotlin, etc.) and any layer (frontend, backend, mobile, CLI, API, etc.).
+
+Follow project guidelines (e.g. `Agents.md`, `agent.md`, `CONTRIBUTING.md`, or project-specific docs).
 
 ## Usage
 
@@ -45,26 +49,28 @@ If a context folder is provided:
 - Extract additional requirements from context files
 - Summarize key insights
 
-### 3. Analyze Blitzy Implementation
+### 3. Analyze Existing Implementation
 
-Review `blitzy/documentation/Project Guide.md` to understand what Blitzy generated:
+**Detect project language and stack** from package manager, config files, or imports (e.g. package.json, requirements.txt, pom.xml, go.mod, Cargo.toml).
+
+Review project documentation (e.g. `Project Guide.md`, README, or equivalent) to understand guidance for code generation:
 
 **Identify overlap:**
-- Does Blitzy's work cover this ticket partially or fully?
-- Which specific features/screens/components did Blitzy implement that relate to this ticket?
-- What files did Blitzy generate that are relevant?
+- Does existing implementation cover this ticket partially or fully?
+- Which specific features relate to this ticket? (screens, components, modules, services, APIs, handlers, controllers, views—use terms appropriate to the stack)
+- What files, modules, or packages are relevant?
 
 **Assess completion:**
-- Is Blitzy's implementation complete for this ticket's requirements?
+- Is existing implementation complete for this ticket's requirements?
 - What functionality is present vs. missing?
-- Are there UI/UX differences from the requirements?
+- Are there differences from the requirements? (UI/UX, API contract, behavior, data model, etc.—depending on the layer)
 
 ### 4. Identify Gaps
 
-Categorize gaps in Blitzy's implementation:
+Categorize gaps in existing implementation:
 
-**Known gaps** (documented in Project Guide):
-- Gaps explicitly mentioned in Blitzy's documentation
+**Known gaps** (documented in project docs):
+- Gaps explicitly mentioned in documentation
 - Features marked as TODO or incomplete
 - Known limitations
 
@@ -74,32 +80,32 @@ Categorize gaps in Blitzy's implementation:
 - Edge cases not handled
 - Integration points not wired up
 - Missing validations or error handling
-- UI polish or styling issues
-- Incorrect/Hallucinated data transformations. (Doesn't match reference swift code)
+- Presentation issues (UI polish, styling, layout—or equivalent for non-UI layers)
+- Incorrect or mismatched data transformations (doesn't match reference implementation)
 
 ### 5. Determine Work Required
 
 Based on the analysis:
 
-**If Blitzy fully implemented this:**
+**If existing implementation fully covers this:**
 - Confirm what files/features already exist
 - Note any testing or verification needed
 - Suggest minimal additional work
 
-**If Blitzy partially implemented this:**
+**If existing implementation partially covers this:**
 - List what's already done (can be leveraged)
 - List what needs to be added/completed
 - Suggest integration approach
 
-**If Blitzy did a mistake:**
-- List where the mistake was made in the source code as a code snippet.
-- List what the correct implementation should be and a reference to the reference/ios code snippet.
-- Suggest changes to be made as a diff.
+**If existing implementation has a mistake:**
+- List where the mistake was made in the source code (with code snippet)
+- List what the correct implementation should be (with reference if available)
+- Suggest changes to be made as a diff
 
-**If Blitzy didn't implement this:**
+**If existing implementation doesn't cover this:**
 - Confirm this is net-new work
-- Suggest similar patterns from Blitzy code to follow
-- Note any Blitzy components that can be reused
+- Suggest similar patterns from existing code to follow (language-appropriate)
+- Note any existing components, modules, services, utilities, or shared code that can be reused
 
 ## Output Format
 
@@ -109,11 +115,11 @@ Concise restatement of what needs to be delivered.
 ### Context Analysis
 Key insights from screenshots, designs, or additional context (if provided).
 
-### Blitzy Implementation Analysis
+### Existing Implementation Analysis
 
-#### What Blitzy Implemented
-- **Feature/Screen**: {name}
-  - Files: {list of generated files}
+#### What Existing Implementation Provides
+- **Feature/Unit** (screen, component, API, module, etc.): {name}
+  - Files: {list of relevant files}
   - Functionality: {what it does}
   - Status: {complete/partial/incomplete}
 
@@ -124,9 +130,9 @@ Key insights from screenshots, designs, or additional context (if provided).
 
 ### Gap Analysis
 
-#### Known Gaps (from Blitzy documentation)
+#### Known Gaps (from project documentation)
 1. **Gap**: {description}
-   - Documented in: {section of Project Guide}
+   - Documented in: {section of project docs}
    - Impact on ticket: {how it affects this work}
 
 #### Unknown Gaps (discovered)
@@ -137,15 +143,15 @@ Key insights from screenshots, designs, or additional context (if provided).
 
 ### Work Required
 
-#### Can Leverage from Blitzy
-- {Component/hook/screen}: {what it provides}
-- {Component/hook/screen}: {what it provides}
+#### Can Leverage from Existing Implementation
+- {Component/module/service/utility/handler/controller—stack-appropriate}: {what it provides}
+- {Another reusable unit}: {what it provides}
 
 #### Needs to be Built/Fixed
 1. **Task**: {description}
    - Type: {new feature / bug fix / enhancement / integration}
    - Files: {files to create or modify}
-   - Depends on: {Blitzy components to use}
+   - Depends on: {existing components/modules/services/utilities to use}
 
 2. **Task**: {description}
    - Type: {type}
@@ -154,7 +160,7 @@ Key insights from screenshots, designs, or additional context (if provided).
 
 ### Recommendations
 
-**Approach**: {suggested implementation approach}
+**Approach**: {suggested implementation approach—language and stack appropriate}
 
 **Priority order**:
 1. {highest priority task}
