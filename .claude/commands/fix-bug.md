@@ -5,6 +5,7 @@ Your goal is to identify the root cause of the bug and implement a minimal, safe
 **Apply this process regardless of programming language, framework, or stack.** Works with any codebase (JavaScript, Python, Java, C#, Go, Rust, Swift, Kotlin, etc.) and any layer (frontend, backend, mobile, CLI, API, etc.).
 
 The issue may involve:
+
 - Frontend UI behavior
 - Backend APIs
 - Full stack interaction (frontend + backend)
@@ -12,7 +13,7 @@ The issue may involve:
 
 Ensure the fix aligns with the project's architecture and coding style.
 
----------------------------------------------------------------------
+---
 
 1. Understand the Issue
 
@@ -28,7 +29,7 @@ Identify:
 
 If the description is incomplete, infer the most likely scenario and clearly document assumptions.
 
----------------------------------------------------------------------
+---
 
 2. Identify Bug Layer
 
@@ -38,6 +39,7 @@ Classify the bug into one of the following layers:
 
 Frontend Bug
 Issues related to:
+
 - UI rendering problems
 - incorrect state management
 - event handling errors
@@ -47,6 +49,7 @@ Issues related to:
 
 Backend Bug
 Issues related to:
+
 - incorrect API logic
 - controller/service errors
 - validation logic
@@ -56,6 +59,7 @@ Issues related to:
 
 Database/Data Bug
 Issues related to:
+
 - incorrect stored values
 - incorrect queries
 - schema mismatch
@@ -64,6 +68,7 @@ Issues related to:
 
 Integration Bug
 Issues related to:
+
 - mismatch between frontend and API
 - incorrect request payloads
 - incorrect response parsing
@@ -72,6 +77,7 @@ Issues related to:
 
 Infrastructure or Configuration Bug
 Issues related to:
+
 - environment variables
 - configuration settings
 - dependency issues
@@ -83,7 +89,7 @@ If the bug spans multiple layers (for example frontend + backend), classify it a
 
 Document the detected bug layer before implementing the fix.
 
----------------------------------------------------------------------
+---
 
 3. Duplicate or Existing Logic Detection
 
@@ -113,7 +119,7 @@ If no duplication exists:
 
 Proceed with root cause debugging.
 
----------------------------------------------------------------------
+---
 
 4. Determine Bug Type
 
@@ -121,6 +127,7 @@ Determine which layer the bug affects.
 
 Frontend Bug
 Examples:
+
 - UI rendering issues
 - incorrect state handling
 - event handling problems
@@ -129,6 +136,7 @@ Examples:
 
 Backend Bug
 Examples:
+
 - API returning incorrect data
 - business logic errors
 - incorrect request validation
@@ -137,12 +145,14 @@ Examples:
 
 Full Stack Bug
 Examples:
+
 - mismatch between frontend and API
 - incorrect data transformation
 - integration failures between layers
 
 Database/Data Bug
 Examples:
+
 - inconsistent stored values
 - incorrect query logic
 - schema mismatch
@@ -150,7 +160,7 @@ Examples:
 
 Focus investigation on the affected layers.
 
----------------------------------------------------------------------
+---
 
 5. Follow Repository Standards
 
@@ -177,7 +187,7 @@ This includes:
 
 Ensure the fix remains consistent with the current implementation.
 
----------------------------------------------------------------------
+---
 
 6. Detect Project Language and Framework
 
@@ -197,7 +207,7 @@ Ensure the fix matches the language, framework, and architecture already used in
 
 Do not introduce new frameworks or languages.
 
----------------------------------------------------------------------
+---
 
 7. Data or Database Verification (If Data Is Involved)
 
@@ -223,7 +233,7 @@ Propose the exact change required.
 
 Do NOT modify the database without explicit confirmation from the user.
 
----------------------------------------------------------------------
+---
 
 8. Debugging Approach
 
@@ -242,7 +252,7 @@ Trace the execution path from input to output to identify where behavior diverge
 
 Focus on identifying the root cause rather than applying temporary fixes.
 
----------------------------------------------------------------------
+---
 
 9. Fix Implementation Guidelines
 
@@ -258,7 +268,7 @@ The fix must:
 
 Keep the fix small, safe, and maintainable.
 
----------------------------------------------------------------------
+---
 
 10. Scope Control
 
@@ -273,7 +283,7 @@ Do NOT:
 
 Testing will be handled by another agent.
 
----------------------------------------------------------------------
+---
 
 11. Output Format
 
@@ -290,6 +300,7 @@ Fix Strategy:
 <how the issue will be resolved>
 
 Files to Modify:
+
 - file path
 - reason
 
@@ -297,6 +308,7 @@ Code Changes:
 <corrected code (language-appropriate)>
 
 Database Verification (if applicable):
+
 <summary of database findings>
 
 Assumptions:

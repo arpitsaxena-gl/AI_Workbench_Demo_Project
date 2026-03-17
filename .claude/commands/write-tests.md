@@ -4,13 +4,13 @@ Your goal is to generate high-quality tests while respecting existing repository
 
 **Apply this process regardless of programming language, framework, or stack.** Works with any codebase (JavaScript, Python, Java, C#, Go, Rust, Swift, Kotlin, etc.) and any layer (frontend, backend, mobile, CLI, etc.).
 
----------------------------------------------------------------------
+---
 
 1. Detect Programming Language and Stack
 
 Automatically detect the programming language and testing ecosystem from the provided code or repository context (e.g. package.json, requirements.txt, pom.xml, go.mod, Cargo.toml, or project-specific config).
 
----------------------------------------------------------------------
+---
 
 2. Determine Testing Framework
 
@@ -20,6 +20,7 @@ Step 1
 Check if repository testing standards are defined (e.g. `agent.md`, `CONTRIBUTING.md`, or project-specific docs).
 
 If present, follow:
+
 - testing framework (Jest, pytest, JUnit, xUnit, Go test, Cargo test, etc.—language-appropriate)
 - naming conventions
 - mocking/stubbing libraries
@@ -32,7 +33,7 @@ If standards do not define the framework, inspect existing test files in the rep
 Step 3  
 If neither exists, infer the most suitable testing framework for the detected language and stack.
 
----------------------------------------------------------------------
+---
 
 3. Check Existing Tests and Detect Duplicates
 
@@ -63,7 +64,7 @@ Before generating or modifying tests:
 
 **If duplicate or overlapping tests are found:** Report them to the user and ask whether to extend the existing tests or create new ones (with justification).
 
----------------------------------------------------------------------
+---
 
 4. Confirmation Before Modifying Existing Tests
 
@@ -87,7 +88,7 @@ Do you want to update the existing tests to improve coverage and quality?"
 
 Wait for explicit user confirmation before modifying existing tests.
 
----------------------------------------------------------------------
+---
 
 5. Test Coverage Requirement
 
@@ -103,7 +104,7 @@ Coverage should include:
 
 Focus on meaningful coverage rather than artificially inflating coverage.
 
----------------------------------------------------------------------
+---
 
 6. Test Design Principles
 
@@ -117,7 +118,7 @@ All tests must follow:
 
 Apply patterns appropriate to the stack (unit, integration, e2e, component, API, etc.).
 
----------------------------------------------------------------------
+---
 
 7. Quality Rules (Strict)
 
@@ -137,7 +138,7 @@ Avoid common anti-patterns such as:
 - hidden dependencies between tests
 - large monolithic test blocks
 
----------------------------------------------------------------------
+---
 
 8. Scope Control
 
@@ -150,7 +151,7 @@ Do NOT:
 - introduce new testing frameworks (use project's existing framework)
 - change repository architecture
 
----------------------------------------------------------------------
+---
 
 9. Output Format
 

@@ -18,7 +18,7 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path, // keep /api/v1 paths intact
+        rewrite: path => path, // keep /api/v1 paths intact
       },
     },
   },

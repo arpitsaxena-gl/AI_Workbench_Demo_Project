@@ -40,7 +40,8 @@ async function request<T>(
       const data: unknown = await response.json();
       if (typeof data === 'object' && data !== null && 'error' in data) {
         const errValue = (data as { error: unknown }).error;
-        message = typeof errValue === 'string' ? errValue : JSON.stringify(errValue);
+        message =
+          typeof errValue === 'string' ? errValue : JSON.stringify(errValue);
       } else if (typeof data === 'string') {
         message = data;
       } else {

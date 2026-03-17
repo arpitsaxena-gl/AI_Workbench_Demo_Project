@@ -7,7 +7,7 @@ The review can operate in two modes:
 1. Standard PR Review
 2. Requirement-Aligned PR Review (when Jira description or summary is provided)
 
----------------------------------------------------------------------
+---
 
 1. Validate Current Branch
 
@@ -26,7 +26,7 @@ Please switch to the feature or bugfix branch before running /review-branch."
 
 Do not analyze the repository if the branch is still main.
 
----------------------------------------------------------------------
+---
 
 2. Identify the Changes
 
@@ -41,7 +41,7 @@ Focus only on:
 
 Ignore unrelated parts of the repository.
 
----------------------------------------------------------------------
+---
 
 3. Follow Repository Standards
 
@@ -58,7 +58,7 @@ If present, follow:
 
 If no standards file is present, infer standards from existing repository code patterns.
 
----------------------------------------------------------------------
+---
 
 4. Requirement Alignment (When Jira Description Is Provided)
 
@@ -78,7 +78,7 @@ If gaps are found:
 
 Clearly explain which parts of the Jira requirement are not satisfied.
 
----------------------------------------------------------------------
+---
 
 5. Code Quality Review
 
@@ -98,7 +98,7 @@ Ensure the code avoids:
 - hardcoded values
 - unused variables or imports
 
----------------------------------------------------------------------
+---
 
 6. Bug and Reliability Checks
 
@@ -112,7 +112,7 @@ Look for potential issues such as:
 
 Confirm that bug fixes resolve the root cause rather than masking the issue.
 
----------------------------------------------------------------------
+---
 
 7. Security Review
 
@@ -124,7 +124,7 @@ Check for security risks including:
 - improper authentication/authorization logic
 - insecure data handling
 
----------------------------------------------------------------------
+---
 
 8. Performance Review
 
@@ -137,7 +137,7 @@ Identify potential performance issues such as:
 
 Suggest improvements when appropriate.
 
----------------------------------------------------------------------
+---
 
 9. Testing Review
 
@@ -153,7 +153,7 @@ Expected coverage should remain **≥ 85%**.
 
 Highlight any risk that coverage may drop below this threshold.
 
----------------------------------------------------------------------
+---
 
 10. Scope Control
 
@@ -163,7 +163,7 @@ Confirm that the PR:
 - does not introduce unrelated changes
 - does not modify unrelated modules
 
----------------------------------------------------------------------
+---
 
 11. Output Format
 

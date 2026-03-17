@@ -34,13 +34,10 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <CardWrapper
-      style={[
-        styles.card,
-        { backgroundColor },
-        style,
-      ]}
+      style={[styles.card, { backgroundColor }, style]}
       onPress={onPress}
-      activeOpacity={onPress ? 0.7 : 1}>
+      activeOpacity={onPress ? 0.7 : 1}
+    >
       {title && (
         <Text style={[styles.cardTitle, { color: textColor }, titleStyle]}>
           {title}
@@ -90,4 +87,3 @@ const styles = StyleSheet.create({
 });
 
 export default Card;
-

@@ -15,7 +15,7 @@ If Jira information is NOT available, infer the PR summary from:
 - commit messages (if available)
 - overall feature behavior
 
----------------------------------------------------------------------
+---
 
 1. Identify Changes
 
@@ -30,7 +30,7 @@ Focus on:
 
 Ignore unrelated repository files.
 
----------------------------------------------------------------------
+---
 
 2. Jira Information Handling
 
@@ -47,7 +47,7 @@ If Jira information is not provided:
 - infer the purpose of the change from the modified files
 - generate a meaningful feature or bug summary
 
----------------------------------------------------------------------
+---
 
 3. Repository Standards
 
@@ -60,7 +60,7 @@ If repository standards exist (e.g. `agent.md`, `CONTRIBUTING.md`, or project-sp
 
 If no repository standards exist, follow common engineering best practices.
 
----------------------------------------------------------------------
+---
 
 4. PR Description Template (MANDATORY FORMAT)
 
@@ -74,7 +74,7 @@ feat: Add login validation (MPX-142)
 fix: Resolve crash in report screen/view/module
 refactor: Improve data service abstraction
 
----------------------------------------------------------------------
+---
 
 Description
 
@@ -87,7 +87,7 @@ Explain:
 - the high-level behavior
 - alignment with existing system behavior (if applicable)
 
----------------------------------------------------------------------
+---
 
 Entry Paths
 
@@ -104,7 +104,7 @@ If not applicable, state:
 
 Not applicable.
 
----------------------------------------------------------------------
+---
 
 Feature Flags
 
@@ -118,7 +118,7 @@ If none exist, state:
 
 None.
 
----------------------------------------------------------------------
+---
 
 Component / Module Integration Details
 
@@ -134,7 +134,7 @@ Include details such as (stack-appropriate):
 
 Provide code snippets if relevant (language-appropriate).
 
----------------------------------------------------------------------
+---
 
 Navigation / Usage Flow
 
@@ -146,7 +146,7 @@ Examples (stack-appropriate):
 - Backend: request/response flow, endpoint invocation
 - CLI: command invocation and arguments
 
----------------------------------------------------------------------
+---
 
 Data Flow
 
@@ -160,7 +160,7 @@ Include:
 - success handling
 - error handling
 
----------------------------------------------------------------------
+---
 
 Dependencies
 
@@ -177,7 +177,7 @@ If no new dependencies were added, state:
 
 No new dependencies introduced.
 
----------------------------------------------------------------------
+---
 
 JIRA Ticket
 
@@ -188,7 +188,7 @@ If Jira was not provided, state:
 
 No Jira ticket provided.
 
----------------------------------------------------------------------
+---
 
 Demo / Screenshots / Evidence
 
@@ -200,22 +200,25 @@ If not applicable:
 
 State "Not applicable."
 
----------------------------------------------------------------------
+---
 
 Files Changed
 
 Group files clearly.
 
 New Files Created
+
 - <file path> – purpose
 
 Modified Files
+
 - <file path> – description of change
 
 Deleted Files
+
 - <file path> – reason
 
----------------------------------------------------------------------
+---
 
 Testing Summary
 
@@ -231,7 +234,7 @@ Coverage expectation:
 
 Test coverage should remain **≥ 85%**.
 
----------------------------------------------------------------------
+---
 
 Risk Assessment
 
@@ -239,7 +242,7 @@ Low / Medium / High
 
 Explain any risks introduced by the change.
 
----------------------------------------------------------------------
+---
 
 Reviewer Checklist
 
@@ -252,7 +255,7 @@ Reviewer Checklist
 - [ ] Tests updated if necessary
 - [ ] Test coverage ≥ 85%
 
----------------------------------------------------------------------
+---
 
 Notes
 

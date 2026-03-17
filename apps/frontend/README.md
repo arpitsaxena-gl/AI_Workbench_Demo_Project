@@ -47,13 +47,13 @@ npm run preview
 
 ## Available Scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start development server |
+| `npm run build`   | Build for production     |
 | `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm test` | Run tests with Vitest |
+| `npm run lint`    | Run ESLint               |
+| `npm test`        | Run tests with Vitest    |
 
 ## Project Structure
 
@@ -79,11 +79,11 @@ MyProject/
 
 ## Routes
 
-| Path | Page |
-|------|------|
-| `/` | Home Dashboard |
-| `/login` | Login |
-| `/signup` | Sign Up |
+| Path      | Page           |
+| --------- | -------------- |
+| `/`       | Home Dashboard |
+| `/login`  | Login          |
+| `/signup` | Sign Up        |
 
 ## Theming
 
@@ -94,7 +94,7 @@ import { useTheme } from './theme/context';
 
 function MyComponent() {
   const { colors, isDarkMode, toggleTheme } = useTheme();
-  
+
   return (
     <button onClick={toggleTheme}>
       {isDarkMode ? 'Light Mode' : 'Dark Mode'}

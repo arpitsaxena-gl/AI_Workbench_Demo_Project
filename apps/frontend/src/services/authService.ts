@@ -23,7 +23,10 @@ function validateLogin(credentials: LoginRequest): Promise<LoginResponse> {
 
 function storeSession(response: LoginResponse): void {
   localStorage.setItem(TOKEN_KEY, response.token);
-  localStorage.setItem(USER_KEY, JSON.stringify({ user: response.user, admin: response.admin }));
+  localStorage.setItem(
+    USER_KEY,
+    JSON.stringify({ user: response.user, admin: response.admin }),
+  );
 }
 
 function clearSession(): void {
@@ -54,5 +57,12 @@ function isLoggedIn(): boolean {
   return getToken() !== null;
 }
 
-export { validateLogin, storeSession, clearSession, getToken, getSession, isLoggedIn };
+export {
+  validateLogin,
+  storeSession,
+  clearSession,
+  getToken,
+  getSession,
+  isLoggedIn,
+};
 export type { LoginRequest, LoginResponse, UserSession };

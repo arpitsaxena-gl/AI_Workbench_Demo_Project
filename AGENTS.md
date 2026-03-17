@@ -6,13 +6,13 @@ This document provides context and guidelines for AI agents working on this mono
 
 This is a **Turborepo monorepo** containing a full-stack e-commerce web application:
 
-| App/Package | Technology | Location |
-|---|---|---|
-| **Frontend** | React 18, TypeScript, Vite 5 | `apps/frontend/` |
-| **Backend** | Express.js, MongoDB, JWT | `apps/backend/` |
-| **UI Library** | Shared React components | `packages/ui/` |
-| **ESLint Config** | Shared ESLint 9 flat configs | `packages/eslint-config/` |
-| **TypeScript Config** | Shared tsconfigs | `packages/typescript-config/` |
+| App/Package           | Technology                   | Location                      |
+| --------------------- | ---------------------------- | ----------------------------- |
+| **Frontend**          | React 18, TypeScript, Vite 5 | `apps/frontend/`              |
+| **Backend**           | Express.js, MongoDB, JWT     | `apps/backend/`               |
+| **UI Library**        | Shared React components      | `packages/ui/`                |
+| **ESLint Config**     | Shared ESLint 9 flat configs | `packages/eslint-config/`     |
+| **TypeScript Config** | Shared tsconfigs             | `packages/typescript-config/` |
 
 ## Monorepo Structure
 
@@ -110,6 +110,7 @@ npm run lint             # ESLint
 ### Routing
 
 Routes are defined in `App.tsx`:
+
 - `/` — HomeScreen (dashboard)
 - `/login` — LoginScreen
 - `/signup` — SignupScreen
@@ -118,28 +119,33 @@ Routes are defined in `App.tsx`:
 ### Key Patterns
 
 **Theming** — Light/dark mode via `ThemeProvider`:
+
 ```typescript
 import { useTheme } from './theme/context';
 const { colors, isDarkMode, toggleTheme } = useTheme();
 ```
 
 **Styling** — CSS Modules for all component styles:
+
 ```typescript
 import styles from './MyComponent.module.css';
 ```
 
 **Authentication** — JWT-based via `AuthProvider`:
+
 - Login stores JWT + session in localStorage
 - `ProtectedRoute` guards authenticated pages
 - Logout clears localStorage and resets state
 
 **Forms** — Controlled components with validation:
+
 - State per field, error state object, loading state
 - Clear error on input change
 
 ### Frontend Guidelines
 
 **DO:**
+
 - Use TypeScript with strict typing
 - Use CSS Modules for component styles
 - Use CSS custom properties for theming
@@ -149,6 +155,7 @@ import styles from './MyComponent.module.css';
 - Make components accessible (labels, ARIA, keyboard nav)
 
 **DON'T:**
+
 - Use `any` types
 - Hard-code colors or font sizes
 - Leave `console.log` in production code
@@ -196,24 +203,24 @@ const renderWithProviders = (component: React.ReactElement) => {
 
 Base path: `/api/v1` (configured via `API_URL` in `env.txt`)
 
-| Route | Methods | Auth | Description |
-|---|---|---|---|
-| `/api/v1/user/validateLogin` | POST | Public | Login, returns JWT |
-| `/api/v1/user/register` | POST | Public | Register new user |
-| `/api/v1/user/` | GET | Admin | List all users |
-| `/api/v1/user/:id` | GET | Admin | Get user by ID |
-| `/api/v1/user/get/count` | GET | Admin | User count |
-| `/api/v1/product/` | GET | Public | List products (filterable by category) |
-| `/api/v1/product/:id` | GET | Public | Get product |
-| `/api/v1/product/` | POST | Admin | Create product |
-| `/api/v1/product/:id` | PUT | Admin | Update product |
-| `/api/v1/product/:id` | DELETE | Admin | Delete product |
-| `/api/v1/category/` | GET | Public | List categories |
-| `/api/v1/category/` | POST | Admin | Create category |
-| `/api/v1/category/:id` | PUT, DELETE | Admin | Update/delete category |
-| `/api/v1/order/` | GET, POST | Auth | List/create orders |
-| `/api/v1/order/:id` | GET, PUT, DELETE | Auth | Order by ID |
-| `/api/v1/order/get/totalSales` | GET | Auth | Total sales aggregate |
+| Route                          | Methods          | Auth   | Description                            |
+| ------------------------------ | ---------------- | ------ | -------------------------------------- |
+| `/api/v1/user/validateLogin`   | POST             | Public | Login, returns JWT                     |
+| `/api/v1/user/register`        | POST             | Public | Register new user                      |
+| `/api/v1/user/`                | GET              | Admin  | List all users                         |
+| `/api/v1/user/:id`             | GET              | Admin  | Get user by ID                         |
+| `/api/v1/user/get/count`       | GET              | Admin  | User count                             |
+| `/api/v1/product/`             | GET              | Public | List products (filterable by category) |
+| `/api/v1/product/:id`          | GET              | Public | Get product                            |
+| `/api/v1/product/`             | POST             | Admin  | Create product                         |
+| `/api/v1/product/:id`          | PUT              | Admin  | Update product                         |
+| `/api/v1/product/:id`          | DELETE           | Admin  | Delete product                         |
+| `/api/v1/category/`            | GET              | Public | List categories                        |
+| `/api/v1/category/`            | POST             | Admin  | Create category                        |
+| `/api/v1/category/:id`         | PUT, DELETE      | Admin  | Update/delete category                 |
+| `/api/v1/order/`               | GET, POST        | Auth   | List/create orders                     |
+| `/api/v1/order/:id`            | GET, PUT, DELETE | Auth   | Order by ID                            |
+| `/api/v1/order/get/totalSales` | GET              | Auth   | Total sales aggregate                  |
 
 ### Data Models
 
@@ -243,12 +250,14 @@ connectionString = <your-mongodb-connection-string>
 ### Backend Guidelines
 
 **DO:**
+
 - Use `console.info` / `console.error` for server logs (not `console.log`)
 - Prefix unused callback params with `_` (e.g. `_err`, `_req`)
 - Return early from error conditions
 - Use async/await with try-catch for DB operations
 
 **DON'T:**
+
 - Commit credentials in `env.txt`
 - Use `console.log` for debug output
 - Leave unused variables or parameters
@@ -256,6 +265,7 @@ connectionString = <your-mongodb-connection-string>
 ### Testing (Backend)
 
 Tests use Jest + Supertest in `__tests__/`:
+
 ```javascript
 const request = require('supertest');
 const app = require('../app');

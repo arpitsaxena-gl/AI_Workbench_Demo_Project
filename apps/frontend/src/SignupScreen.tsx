@@ -49,7 +49,8 @@ function SignupScreen() {
     } else if (password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     } else if (!/[A-Z]/.test(password)) {
-      newErrors.password = 'Password must contain at least one uppercase letter';
+      newErrors.password =
+        'Password must contain at least one uppercase letter';
     } else if (!/[0-9]/.test(password)) {
       newErrors.password = 'Password must contain at least one number';
     }
@@ -106,16 +107,27 @@ function SignupScreen() {
   };
 
   return (
-    <div className={styles.container} style={{ backgroundColor: colors.background }}>
+    <div
+      className={styles.container}
+      style={{ backgroundColor: colors.background }}
+    >
       <div className={styles.scrollContainer}>
         <div className={styles.content}>
           {/* Header */}
           <div className={styles.header}>
-            <div className={styles.logoContainer} style={{ backgroundColor: colors.primary }}>
+            <div
+              className={styles.logoContainer}
+              style={{ backgroundColor: colors.primary }}
+            >
               <span className={styles.logoText}>✦</span>
             </div>
-            <h1 className={styles.title} style={{ color: colors.text }}>Create Account</h1>
-            <p className={styles.subtitle} style={{ color: colors.secondaryText }}>
+            <h1 className={styles.title} style={{ color: colors.text }}>
+              Create Account
+            </h1>
+            <p
+              className={styles.subtitle}
+              style={{ color: colors.secondaryText }}
+            >
               Sign up to get started with your account
             </p>
           </div>
@@ -124,7 +136,9 @@ function SignupScreen() {
           <form className={styles.form} onSubmit={handleSignUp}>
             {/* Full Name Input */}
             <div className={styles.inputContainer}>
-              <label className={styles.label} style={{ color: colors.text }}>Full Name</label>
+              <label className={styles.label} style={{ color: colors.text }}>
+                Full Name
+              </label>
               <input
                 type="text"
                 className={styles.input}
@@ -135,7 +149,7 @@ function SignupScreen() {
                 }}
                 placeholder="Enter your full name"
                 value={fullName}
-                onChange={(e) => {
+                onChange={e => {
                   setFullName(e.target.value);
                   clearFieldError('fullName');
                 }}
@@ -148,7 +162,9 @@ function SignupScreen() {
 
             {/* Email Input */}
             <div className={styles.inputContainer}>
-              <label className={styles.label} style={{ color: colors.text }}>Email</label>
+              <label className={styles.label} style={{ color: colors.text }}>
+                Email
+              </label>
               <input
                 type="email"
                 className={styles.input}
@@ -159,7 +175,7 @@ function SignupScreen() {
                 }}
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => {
+                onChange={e => {
                   setEmail(e.target.value);
                   clearFieldError('email');
                 }}
@@ -172,7 +188,9 @@ function SignupScreen() {
 
             {/* Password Input */}
             <div className={styles.inputContainer}>
-              <label className={styles.label} style={{ color: colors.text }}>Password</label>
+              <label className={styles.label} style={{ color: colors.text }}>
+                Password
+              </label>
               <div className={styles.passwordContainer}>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -184,7 +202,7 @@ function SignupScreen() {
                   }}
                   placeholder="Create a password"
                   value={password}
-                  onChange={(e) => {
+                  onChange={e => {
                     setPassword(e.target.value);
                     clearFieldError('password');
                   }}
@@ -204,26 +222,33 @@ function SignupScreen() {
               {errors.password && (
                 <span className={styles.errorText}>{errors.password}</span>
               )}
-              <span className={styles.hintText} style={{ color: colors.secondaryText }}>
+              <span
+                className={styles.hintText}
+                style={{ color: colors.secondaryText }}
+              >
                 Min 8 characters with uppercase and number
               </span>
             </div>
 
             {/* Confirm Password Input */}
             <div className={styles.inputContainer}>
-              <label className={styles.label} style={{ color: colors.text }}>Confirm Password</label>
+              <label className={styles.label} style={{ color: colors.text }}>
+                Confirm Password
+              </label>
               <div className={styles.passwordContainer}>
                 <input
                   type={showConfirmPassword ? 'text' : 'password'}
                   className={`${styles.input} ${styles.passwordInput}`}
                   style={{
                     backgroundColor: colors.card,
-                    borderColor: errors.confirmPassword ? '#ef4444' : colors.border,
+                    borderColor: errors.confirmPassword
+                      ? '#ef4444'
+                      : colors.border,
                     color: colors.text,
                   }}
                   placeholder="Confirm your password"
                   value={confirmPassword}
-                  onChange={(e) => {
+                  onChange={e => {
                     setConfirmPassword(e.target.value);
                     clearFieldError('confirmPassword');
                   }}
@@ -233,7 +258,11 @@ function SignupScreen() {
                   type="button"
                   className={styles.eyeButton}
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
+                  aria-label={
+                    showConfirmPassword
+                      ? 'Hide confirm password'
+                      : 'Show confirm password'
+                  }
                 >
                   <span style={{ color: colors.secondaryText, fontSize: 16 }}>
                     {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
@@ -241,7 +270,9 @@ function SignupScreen() {
                 </button>
               </div>
               {errors.confirmPassword && (
-                <span className={styles.errorText}>{errors.confirmPassword}</span>
+                <span className={styles.errorText}>
+                  {errors.confirmPassword}
+                </span>
               )}
             </div>
 
@@ -265,22 +296,41 @@ function SignupScreen() {
                 {acceptedTerms && <span className={styles.checkmark}>✓</span>}
               </button>
               <div className={styles.termsTextContainer}>
-                <span className={styles.termsText} style={{ color: colors.secondaryText }}>
+                <span
+                  className={styles.termsText}
+                  style={{ color: colors.secondaryText }}
+                >
                   I agree to the{' '}
                 </span>
-                <button type="button" onClick={handleTermsPress} className={styles.termsLink}>
-                  <span style={{ color: colors.primary }}>Terms of Service</span>
+                <button
+                  type="button"
+                  onClick={handleTermsPress}
+                  className={styles.termsLink}
+                >
+                  <span style={{ color: colors.primary }}>
+                    Terms of Service
+                  </span>
                 </button>
-                <span className={styles.termsText} style={{ color: colors.secondaryText }}>
-                  {' '}and{' '}
+                <span
+                  className={styles.termsText}
+                  style={{ color: colors.secondaryText }}
+                >
+                  {' '}
+                  and{' '}
                 </span>
-                <button type="button" onClick={handlePrivacyPress} className={styles.termsLink}>
+                <button
+                  type="button"
+                  onClick={handlePrivacyPress}
+                  className={styles.termsLink}
+                >
                   <span style={{ color: colors.primary }}>Privacy Policy</span>
                 </button>
               </div>
             </div>
             {errors.terms && (
-              <span className={`${styles.errorText} ${styles.termsError}`}>{errors.terms}</span>
+              <span className={`${styles.errorText} ${styles.termsError}`}>
+                {errors.terms}
+              </span>
             )}
 
             {/* Sign Up Button */}
@@ -300,11 +350,20 @@ function SignupScreen() {
 
             {/* Divider */}
             <div className={styles.dividerContainer}>
-              <div className={styles.divider} style={{ backgroundColor: colors.border }} />
-              <span className={styles.dividerText} style={{ color: colors.secondaryText }}>
+              <div
+                className={styles.divider}
+                style={{ backgroundColor: colors.border }}
+              />
+              <span
+                className={styles.dividerText}
+                style={{ color: colors.secondaryText }}
+              >
                 or sign up with
               </span>
-              <div className={styles.divider} style={{ backgroundColor: colors.border }} />
+              <div
+                className={styles.divider}
+                style={{ backgroundColor: colors.border }}
+              />
             </div>
 
             {/* Social Signup Buttons */}
@@ -317,7 +376,12 @@ function SignupScreen() {
                 aria-label="Sign up with Google"
               >
                 <span className={styles.socialIcon}>G</span>
-                <span className={styles.socialText} style={{ color: colors.text }}>Google</span>
+                <span
+                  className={styles.socialText}
+                  style={{ color: colors.text }}
+                >
+                  Google
+                </span>
               </button>
 
               <button
@@ -328,16 +392,28 @@ function SignupScreen() {
                 aria-label="Sign up with Apple"
               >
                 <span className={styles.socialIcon}>🍎</span>
-                <span className={styles.socialText} style={{ color: colors.text }}>Apple</span>
+                <span
+                  className={styles.socialText}
+                  style={{ color: colors.text }}
+                >
+                  Apple
+                </span>
               </button>
             </div>
 
             {/* Sign In Link */}
             <div className={styles.signInContainer}>
-              <span className={styles.signInText} style={{ color: colors.secondaryText }}>
+              <span
+                className={styles.signInText}
+                style={{ color: colors.secondaryText }}
+              >
                 Already have an account?{' '}
               </span>
-              <button type="button" onClick={handleSignIn} className={styles.signInLink}>
+              <button
+                type="button"
+                onClick={handleSignIn}
+                className={styles.signInLink}
+              >
                 <span style={{ color: colors.primary }}>Sign In</span>
               </button>
             </div>
