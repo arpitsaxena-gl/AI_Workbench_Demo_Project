@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "github": {
+     "command": "npx",
+     "args": ["-y", "@modelcontextprotocol/server-github"],
+     "env": {
+       "GITHUB_TOKEN": "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"
+     }
+   },
+   "mongodb": {
+    "command": "npx",
+    "args": ["-y", "mongodb-mcp-server@latest"],
+    "env": {
+      "MDB_MCP_CONNECTION_STRING": "mongodb+srv://kanagasabairangasamy_db_user:12345677AA@cluster0.yk6gxue.mongodb.net/"
+    }
+  },
+  "aif": {//projectName
+        "command": "node",
+        "args": ["C:\\aif\\mcp-server.cjs"],//mcpserverPath
+        "env": {
+          "API_BASE_URL": "http://localhost:3000"
+        }
+  },
+}
+}

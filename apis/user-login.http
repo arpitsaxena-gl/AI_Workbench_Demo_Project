@@ -1,0 +1,27 @@
+@baseUrl = http://localhost:3000/api/v1
+
+### Validate Login - Success case
+POST {{baseUrl}}/user/validateLogin
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Validate Login - Invalid credentials
+POST {{baseUrl}}/user/validateLogin
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "wrongpassword"
+}
+
+### Validate Login - Missing password
+POST {{baseUrl}}/user/validateLogin
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}

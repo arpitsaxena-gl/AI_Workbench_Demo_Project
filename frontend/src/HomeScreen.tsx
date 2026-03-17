@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './theme/context';
+import { getSession, clearSession, isLoggedIn } from './services/authService';
+import type { UserSession } from './services/authService';
 import styles from './HomeScreen.module.css';
 
 const statsData = [
@@ -69,10 +71,18 @@ const notifications = [
 const HomeScreen: React.FC = () => {
   const { colors, isDarkMode } = useTheme();
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(isLoggedIn);
+  const [session, setSession] = useState<UserSession | null>(getSession);
 
   const handleLoginPress = () => {
     navigate('/login');
   };
+
+  const handleLogout = useCallback(() => {
+    clearSession();
+    setLoggedIn(false);
+    setSession(null);
+  }, []);
 
   return (
     <div className={styles.container} style={{ backgroundColor: colors.background }}>
@@ -81,18 +91,33 @@ const HomeScreen: React.FC = () => {
         <header className={styles.header}>
           <div>
             <p className={styles.greeting} style={{ color: colors.secondaryText }}>Good Morning</p>
-            <h1 className={styles.headerTitle} style={{ color: colors.text }}>
-              Welcome Back! 👋
-            </h1>
+            <div className={styles.headerTitleRow}>
+              <h1 className={styles.headerTitle} style={{ color: colors.text }}>
+                {loggedIn && session ? `Welcome, ${session.user}` : 'Welcome Back!'} 👋
+              </h1>
+              {loggedIn && session?.admin && (
+                <span className={styles.adminBadge}>Admin</span>
+              )}
+            </div>
           </div>
           <div className={styles.headerActions}>
-            <button
-              className={styles.loginButton}
-              onClick={handleLoginPress}
-              aria-label="Login"
-            >
-              Login
-            </button>
+            {loggedIn ? (
+              <button
+                className={styles.logoutButton}
+                onClick={handleLogout}
+                aria-label="Logout"
+              >
+                Logout
+              </button>
+            ) : (
+              <button
+                className={styles.loginButton}
+                onClick={handleLoginPress}
+                aria-label="Login"
+              >
+                Login
+              </button>
+            )}
             <button
               className={styles.iconButton}
               style={{ backgroundColor: colors.card, borderColor: colors.border }}

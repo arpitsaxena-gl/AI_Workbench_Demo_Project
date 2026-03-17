@@ -36,6 +36,27 @@
   align-items: center;
 }
 
+.headerTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.adminBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background-color: #7c3aed;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .loginButton {
   padding: 10px 16px;
   border-radius: 20px;
@@ -47,6 +68,22 @@
 }
 
 .loginButton:hover {
+  opacity: 0.9;
+}
+
+.logoutButton {
+  padding: 10px 16px;
+  border-radius: 20px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.logoutButton:hover {
   opacity: 0.9;
 }
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from './theme/context';
+import { validateLogin, storeSession } from './services/authService';
+import { ApiRequestError } from './services/api';
 import styles from './LoginScreen.module.css';
 
 function LoginScreen() {
@@ -11,6 +13,7 @@ function LoginScreen() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [apiError, setApiError] = useState('');
 
   const validateEmail = (value: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,11 +44,17 @@ function LoginScreen() {
     if (!validateForm()) return;
 
     setIsLoading(true);
+    setApiError('');
     try {
-      await new Promise<void>(resolve => setTimeout(() => resolve(), 1500));
-      console.log('Sign in successful', { email, password });
+      const response = await validateLogin({ email, password });
+      storeSession(response);
+      navigate('/');
     } catch (error) {
-      console.error('Sign in failed', error);
+      if (error instanceof ApiRequestError) {
+        setApiError(error.message);
+      } else {
+        setApiError('Unable to connect to the server. Please try again later.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -80,6 +89,13 @@ function LoginScreen() {
 
           {/* Form */}
           <form className={styles.form} onSubmit={handleSignIn}>
+            {apiError && (
+              <div className={styles.apiError} role="alert">
+                <span className={styles.apiErrorIcon}>⚠</span>
+                <span className={styles.apiErrorText}>{apiError}</span>
+              </div>
+            )}
+
             {/* Email Input */}
             <div className={styles.inputContainer}>
               <label className={styles.label} style={{ color: colors.text }}>Email</label>
