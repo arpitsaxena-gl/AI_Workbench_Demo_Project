@@ -10,12 +10,12 @@ Connect JIRA to Cursor via **MCP** (Model Context Protocol) for Chat, and use th
 
 ## Commands
 
-| Action        | Terminal                    | Chat (MCP)              |
-|---------------|-----------------------------|--------------------------|
-| List my tickets | `npm run jira:list`       | “List my JIRA tickets”   |
-| Get issue     | `npm run jira -- get PROJ-123` | “Show ticket PROJ-123” |
-| Transitions   | `npm run jira -- transitions PROJ-123` | — |
-| Help          | `npm run jira -- --help`  | —                        |
+| Action          | Terminal                               | Chat (MCP)             |
+| --------------- | -------------------------------------- | ---------------------- |
+| List my tickets | `npm run jira:list`                    | “List my JIRA tickets” |
+| Get issue       | `npm run jira -- get PROJ-123`         | “Show ticket PROJ-123” |
+| Transitions     | `npm run jira -- transitions PROJ-123` | —                      |
+| Help            | `npm run jira -- --help`               | —                      |
 
 ## Security
 
