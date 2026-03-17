@@ -8,7 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "jira": "node scripts/jira.mjs",
+    "jira:connect": "node scripts/jira.mjs connect",
+    "jira:list": "node scripts/jira.mjs list"
   },
   "dependencies": {
     "react": "^19.0.0",
