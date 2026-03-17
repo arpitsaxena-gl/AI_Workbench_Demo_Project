@@ -1,0 +1,101 @@
+---
+description: Workflow for reviewing a branch or pull request
+alwaysApply: false
+---
+
+# Review Branch Workflow
+
+## When to Use
+
+Invoke this rule when reviewing a branch, pull request, or code changes.
+
+## Review Steps
+
+### 1. Understand the Context
+
+- Read the PR description and linked ticket/issue
+- Understand what problem is being solved
+- Note the expected behavior and acceptance criteria
+
+### 2. Check Out the Branch
+
+```bash
+# Fetch latest changes
+git fetch origin
+
+# Check out the branch to review
+git checkout <branch-name>
+
+# Install dependencies if changed
+npm install
+```
+
+### 3. Run the Application
+
+```bash
+# Start the dev server
+npm run dev
+
+# Run tests
+npm test
+
+# Check for lint errors
+npm run lint
+```
+
+### 4. Code Review Checklist
+
+#### Functionality
+- [ ] Code works as described in the PR
+- [ ] Edge cases are handled
+- [ ] Error states are handled gracefully
+- [ ] No regressions in existing functionality
+
+#### Code Quality
+- [ ] Code follows project conventions
+- [ ] No `any` types or type assertions
+- [ ] No hard-coded values that should be configurable
+- [ ] No console.log statements left in
+- [ ] No commented-out code
+- [ ] DRY principle followed (no unnecessary duplication)
+
+#### React Patterns
+- [ ] Components are focused and single-purpose
+- [ ] State is kept as local as possible
+- [ ] API calls use TanStack Query
+- [ ] No unnecessary useEffect hooks
+- [ ] Proper loading and error states
+
+#### Styling
+- [ ] Uses CSS Modules or theme system
+- [ ] No hard-coded colors or font sizes
+- [ ] Responsive design works on mobile/tablet/desktop
+- [ ] Consistent spacing
+
+#### Accessibility
+- [ ] Images have alt text
+- [ ] Form inputs have labels
+- [ ] Interactive elements are keyboard accessible
+- [ ] Sufficient color contrast
+
+#### Testing
+- [ ] Tests cover the main functionality
+- [ ] Tests cover edge cases
+- [ ] Tests are meaningful (not just for coverage)
+
+### 5. Provide Feedback
+
+When leaving comments:
+- Be specific about the issue
+- Explain why it's a problem
+- Suggest a solution when possible
+- Use "nit:" prefix for minor suggestions
+- Distinguish between blocking issues and nice-to-haves
+
+### 6. Approval Criteria
+
+Approve when:
+- All blocking issues are resolved
+- Tests pass
+- Code meets quality standards
+- Functionality matches requirements
