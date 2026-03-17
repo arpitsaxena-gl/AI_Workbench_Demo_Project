@@ -32,13 +32,13 @@ app.use(`${api}/order`, orderRouter);
 mongoose
   .connect(process.env.connectionString)
   .then(() => {
-    console.log("success");
+    console.info("Database connected successfully");
   })
   .catch((e) => {
-    console.log(e);
+    console.error("Database connection failed:", e);
   });
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`server is running on port ${port}`);
+  console.info(`server is running on port ${port}`);
 });

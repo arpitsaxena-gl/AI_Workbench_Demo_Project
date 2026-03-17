@@ -2,15 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Orders = require("../model/order");
 const OrderItem = require("../model/order-item");
-console.log(Orders);
+
 router.get(`/`, async (req, res) => {
-  console.log(Orders);
   const order = await Orders.find().populate("user");
   return res.send(order);
 });
 
 router.get(`/:id`, async (req, res) => {
-  console.log(Orders);
   const order = await Orders.findById(req.params.id)
     .populate("user")
     .populate("orderItems");
@@ -18,7 +16,6 @@ router.get(`/:id`, async (req, res) => {
 });
 
 router.post(`/`, async (req, res) => {
-  console.log("req  ** " + req);
   const orderItemsIds = Promise.all(
     req.body.orderItems.map(async (orderItem) => {
       let newOrderItem = new OrderItem({
@@ -41,7 +38,6 @@ router.post(`/`, async (req, res) => {
       return totalPrice;
     })
   );
-  console.log(totalPrice);
   const TotalPrice = totalPrice.reduce((a, b) => a + b, 0);
   const order = new Orders({
     orderItems: orderItemsIdsResolved,
@@ -67,15 +63,10 @@ router.post(`/`, async (req, res) => {
         success: false,
       });
     });
-  // order = await order.save();
-  // if(!order)
-  // return res.status(400).send('the order cannot be created');
-
-  // res.send(order);
 });
 
 router.put("/:id", async (req, res) => {
-  const order = await Order.findByIdAndUpdate(
+  const order = await Orders.findByIdAndUpdate(
     req.params.id,
     {
       status: req.body.status,
@@ -93,7 +84,7 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete(`/:id`, (req, res) => {
-  Order.findByIdAndRemove(req.params.id)
+  Orders.findByIdAndRemove(req.params.id)
     .then(async (order) => {
       if (order) {
         await order.orderItems.map(async (orderItem) => {
@@ -104,7 +95,7 @@ router.delete(`/:id`, (req, res) => {
         return res.status(404).json({ success: false, message: "not found" });
       }
     })
-    .catch((err) => {
+    .catch((_err) => {
       return res.status(404).json({ success: false });
     });
 });

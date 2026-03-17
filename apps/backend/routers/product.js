@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../model/product');
-console.log(Product);
 const Category = require('../model/category');
 const mongoose = require('mongoose');
+
 router.get(`/`,async (req,res)=>{
-    console.log(Product);
     let filter = {};
     if(req.query.category){
         filter = {category:req.query.category.split(",")}
@@ -15,7 +14,6 @@ router.get(`/`,async (req,res)=>{
 })
 
 router.get(`/:id`,async (req,res)=>{
-    console.log(Product);
     const product = await Product.findById(req.params.id).populate('category');
     if(!product){
       return res.status(500).json({success: false})
@@ -26,7 +24,6 @@ router.get(`/:id`,async (req,res)=>{
 
 router.post(`/`,async (req,res)=>{
     let category = await Category.findById(req.body.category);
-    console.log("category "+category);
     if(!category){
         return res.status(400).send("invalid category");
     }
@@ -55,12 +52,10 @@ router.post(`/`,async (req,res)=>{
 })
 
 router.put(`/:id`,async (req,res)=>{
-    console.log(Product);
     if(!mongoose.isValidObjectId(req.params.id)){
         res.status(400).send("Invalid product");
     }
     let category = await Category.findById(req.body.category);
-    console.log("category "+category);
     if(!category){
         return res.status(400).send("invalid category");
     }
@@ -94,7 +89,7 @@ router.delete(`/:id`,(req,res)=>{
         }else{
             return res.status(404).json({success:false,message:"not found"})
         }
-    }).catch(err=>{
+    }).catch(_err=>{
 
       return res.status(404).json({success:false});
     })

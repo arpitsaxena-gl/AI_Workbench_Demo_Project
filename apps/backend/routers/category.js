@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../model/category');
-console.log(Category);
+
 router.get(`/`,async (req,res)=>{
-    console.log(Category);
     const category = await Category.find();
     if(!category){
         res.status(500).json({success:false,message:"no record found for categories"});
@@ -34,7 +33,7 @@ router.delete(`/:id`,(req,res)=>{
         }else{
             return res.status(404).json({success:false,message:"not found"})
         }
-    }).catch(err=>{
+    }).catch(_err=>{
 
       return res.status(404).json({success:false});
     })

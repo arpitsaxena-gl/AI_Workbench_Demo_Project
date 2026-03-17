@@ -10,12 +10,12 @@ async function fixAdminUser() {
       { $set: { isAdmin: true } }
     );
     if (result.matchedCount === 0) {
-      console.log("User john@example.com not found");
+      console.info("User john@example.com not found");
       return;
     }
-    console.log("Updated john@example.com to isAdmin: true");
+    console.info("Updated john@example.com to isAdmin: true");
     const user = await Users.findOne({ userId: "john@example.com" }).select("-passwordHash");
-    console.log("Verified:", JSON.stringify(user, null, 2));
+    console.info("Verified:", JSON.stringify(user, null, 2));
   } catch (e) {
     console.error(e);
   } finally {

@@ -3,9 +3,8 @@ const router = express.Router();
 const Users = require("../model/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-console.log(Users);
+
 router.get(`/`, async (req, res) => {
-  console.log("Users");
   try {
     const user = await Users.find().select("-passwordHash");
     if (user) {
@@ -22,7 +21,6 @@ router.get(`/`, async (req, res) => {
 });
 
 router.get(`/:id`, async (req, res) => {
-  console.log(Users);
   try {
     const user = await Users.findById(req.params.id).select("-passwordHash");
     if (!user) {
@@ -52,7 +50,6 @@ router.post(`/register`, async (req, res) => {
   });
   let userId = req.body.userId;
   const usernameExists = await Users.findOne({ userId });
-  console.log("username exist " + usernameExists);
   if (usernameExists) {
     return res.status(400).json({
       error: "Username and email already exists",
@@ -84,7 +81,6 @@ router.post("/validateLogin", async (req, res) => {
     req.body.password &&
     bcrypt.compareSync(req.body.password, user.passwordHash)
   ) {
-    console.log(user.isAdmin);
     const token = jwt.sign(
       {
         userId: user.id,
