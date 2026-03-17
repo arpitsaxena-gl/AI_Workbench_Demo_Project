@@ -1,0 +1,30 @@
+@baseUrl = http://localhost:3000/api/v1
+
+### 1. Register User
+POST {{baseUrl}}/user/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "userId": "john@example.com",
+  "password": "SecurePass123",
+  "address1": "123 Main St",
+  "address2": "Apt 4",
+  "pincode": 600001,
+  "mobileNumber": 9876543210,
+  "isAdmin": false
+}
+
+### 2. Validate Login (get token first - admin user required for getUsers)
+# @name login
+POST {{baseUrl}}/user/validateLogin
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "SecurePass123"
+}
+
+### 3. Get Users (requires token from login - admin only)
+GET {{baseUrl}}/user
+Authorization: Bearer {{login.response.body.token}}
