@@ -1,137 +1,159 @@
-# MyProject
+# Turborepo starter
 
-A modern React 19 web application with TypeScript, Vite, and React Router.
+This Turborepo starter is maintained by the Turborepo core team.
 
-## Features
+## Using this example
 
-- React 19 with TypeScript
-- Vite for fast development and builds
-- React Router DOM v7 for client-side routing
-- CSS Modules for component-scoped styling
-- Dark/Light mode support
-- Responsive design
-- Vitest for testing
+Run the following command:
 
-## Prerequisites
-
-- Node.js 20 or higher
-- npm or yarn
-
-## Getting Started
-
-### 1. Install Dependencies
-
-```bash
-npm install
+```sh
+npx create-turbo@latest
 ```
 
-### 2. Start Development Server
+## What's inside?
 
-```bash
-npm run dev
+This Turborepo includes the following packages/apps:
+
+### Apps and Packages
+
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Utilities
+
+This Turborepo has some additional tools already setup for you:
+
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+
+### Build
+
+To build all apps and packages, run the following command:
+
+With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+
+```sh
+cd my-turborepo
+turbo build
 ```
 
-The app will open at [http://localhost:3000](http://localhost:3000)
+Without global `turbo`, use your package manager:
 
-### 3. Build for Production
-
-```bash
-npm run build
+```sh
+cd my-turborepo
+npx turbo build
+yarn dlx turbo build
+pnpm exec turbo build
 ```
 
-### 4. Preview Production Build
+You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
 
-```bash
-npm run preview
+With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+
+```sh
+turbo build --filter=docs
 ```
 
-## Available Scripts
+Without global `turbo`:
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run lint` | Run ESLint |
-| `npm test` | Run tests with Vitest |
-
-## Project Structure
-
-```
-MyProject/
-├── public/              # Static assets
-├── src/
-│   ├── main.tsx         # App entry point
-│   ├── index.css        # Global styles
-│   ├── theme/
-│   │   └── context.tsx  # Theme provider
-│   ├── HomeScreen.tsx   # Home/Dashboard page
-│   ├── LoginScreen.tsx  # Login page
-│   ├── SignupScreen.tsx # Signup page
-│   └── *.module.css     # Component styles
-├── App.tsx              # Root component with routes
-├── index.html           # HTML template
-├── package.json
-├── tsconfig.json
-├── vite.config.ts
-└── vitest.config.ts
+```sh
+npx turbo build --filter=docs
+yarn exec turbo build --filter=docs
+pnpm exec turbo build --filter=docs
 ```
 
-## Routes
+### Develop
 
-| Path | Page |
-|------|------|
-| `/` | Home Dashboard |
-| `/login` | Login |
-| `/signup` | Sign Up |
+To develop all apps and packages, run the following command:
 
-## Theming
+With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
 
-The app supports automatic dark/light mode based on system preferences. Theme can also be toggled programmatically using the `useTheme` hook:
-
-```typescript
-import { useTheme } from './theme/context';
-
-function MyComponent() {
-  const { colors, isDarkMode, toggleTheme } = useTheme();
-  
-  return (
-    <button onClick={toggleTheme}>
-      {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-    </button>
-  );
-}
+```sh
+cd my-turborepo
+turbo dev
 ```
 
-## Testing
+Without global `turbo`, use your package manager:
 
-Run tests:
-
-```bash
-npm test
+```sh
+cd my-turborepo
+npx turbo dev
+yarn exec turbo dev
+pnpm exec turbo dev
 ```
 
-Run tests in watch mode:
+You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
 
-```bash
-npm test -- --watch
+With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+
+```sh
+turbo dev --filter=web
 ```
 
-Run tests with coverage:
+Without global `turbo`:
 
-```bash
-npm test -- --coverage
+```sh
+npx turbo dev --filter=web
+yarn exec turbo dev --filter=web
+pnpm exec turbo dev --filter=web
 ```
 
-## Tech Stack
+### Remote Caching
 
-- [React 19](https://react.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
-- [React Router DOM](https://reactrouter.com/)
-- [Vitest](https://vitest.dev/)
-- [Testing Library](https://testing-library.com/)
+> [!TIP]
+> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
 
-## License
+Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
 
-MIT
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+
+With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+
+```sh
+cd my-turborepo
+turbo login
+```
+
+Without global `turbo`, use your package manager:
+
+```sh
+cd my-turborepo
+npx turbo login
+yarn exec turbo login
+pnpm exec turbo login
+```
+
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+
+With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+
+```sh
+turbo link
+```
+
+Without global `turbo`:
+
+```sh
+npx turbo link
+yarn exec turbo link
+pnpm exec turbo link
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
+- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
+- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
+- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
+- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
+- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
