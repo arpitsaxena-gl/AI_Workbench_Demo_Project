@@ -1,0 +1,29 @@
+---
+description: Prioritize MCP tools for API testing over REST client or curl
+alwaysApply: true
+---
+
+# API Testing Priority
+
+When asked to test or call an API endpoint, follow this order:
+
+1. **Check MCP tools first** — Discover available MCP servers from the project's MCP configuration. Look for a matching MCP tool for the API endpoint. If one exists, use `CallMcpTool` to execute it.
+2. **Fall back to REST client (.http files)** — If no MCP tool matches, check for `.http` files in the `apis/` folder and execute the request using the shell.
+3. **Manual curl/fetch as last resort** — Only construct raw HTTP requests if neither MCP nor .http definitions are available.
+
+## MCP Tool Discovery
+
+Before calling any MCP tool, always:
+- Discover available MCP servers from the project configuration
+- List available tools under the discovered MCP server's tools folder
+- Read the tool's JSON schema to confirm required parameters
+- Call with correct arguments via `CallMcpTool`
+
+## Example
+
+```
+# User asks: "call the login API with email: test@example.com"
+# Step 1: Check MCP → found api_login tool → use CallMcpTool
+# Step 2 (if no MCP): Check apis/*.http → found validateLogin.http → use Invoke-RestMethod
+# Step 3 (if nothing): Build request manually
+```
