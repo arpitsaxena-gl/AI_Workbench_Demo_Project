@@ -1,0 +1,155 @@
+.container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.scrollContent {
+  padding: 16px;
+  padding-bottom: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.backButton:hover {
+  opacity: 0.9;
+}
+
+.headerTitle {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.profileCard {
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatarLarge {
+  width: 96px;
+  height: 96px;
+  border-radius: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.displayName {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 4px 0;
+}
+
+.email {
+  font-size: 16px;
+  margin: 0 0 24px 0;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 16px 0;
+}
+
+.infoCard {
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 12px;
+  border: 1px solid;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.infoRow:first-child {
+  padding-top: 0;
+}
+
+.infoLabel {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.infoValue {
+  font-size: 14px;
+}
+
+.logoutButton {
+  width: 100%;
+  max-width: 280px;
+  margin: 24px auto 0;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1px solid #ef4444;
+  background-color: transparent;
+  color: #ef4444;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.logoutButton:hover {
+  opacity: 0.9;
+  background-color: rgba(239, 68, 68, 0.08);
+}
+
+@media (max-width: 480px) {
+  .headerTitle {
+    font-size: 24px;
+  }
+
+  .avatarLarge {
+    width: 80px;
+    height: 80px;
+    font-size: 40px;
+  }
+
+  .displayName {
+    font-size: 20px;
+  }
+}
