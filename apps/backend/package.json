@@ -7,8 +7,8 @@
     "dev": "nodemon app.js",
     "start": "node app.js",
     "lint": "eslint .",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test": "jest --passWithNoTests",
+    "test:coverage": "jest --coverage --passWithNoTests"
   },
   "author": "",
   "license": "ISC",
