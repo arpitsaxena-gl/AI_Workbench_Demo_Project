@@ -4,7 +4,7 @@ Your goal is to identify the repository provider, generate the correct PR descri
 
 **Apply this process regardless of programming language, framework, or stack.** Works with any codebase (JavaScript, Python, Java, C#, Go, Rust, Swift, Kotlin, etc.).
 
----------------------------------------------------------------------
+---
 
 1. Detect Repository Type
 
@@ -34,7 +34,7 @@ If SVN is detected, report that PR workflow may not apply and explain the reposi
 
 Document which repository provider is used.
 
----------------------------------------------------------------------
+---
 
 2. Validate Current Repository
 
@@ -55,7 +55,7 @@ Please connect the project to a version control repository before creating a PR.
 
 Stop execution.
 
----------------------------------------------------------------------
+---
 
 3. Validate Current Branch
 
@@ -74,7 +74,7 @@ Please switch to a feature or bugfix branch before creating a PR."
 
 Stop execution.
 
----------------------------------------------------------------------
+---
 
 4. Identify Base Branch
 
@@ -88,7 +88,7 @@ Common base branches include:
 
 Determine the correct base branch by inspecting repository configuration.
 
----------------------------------------------------------------------
+---
 
 5. Identify Changes
 
@@ -103,7 +103,7 @@ Focus only on:
 
 Ignore unrelated repository files.
 
----------------------------------------------------------------------
+---
 
 6. Detect PR Template
 
@@ -125,7 +125,7 @@ If not found:
 
 Generate the PR description using the repository standard structure.
 
----------------------------------------------------------------------
+---
 
 7. Generate PR Description
 
@@ -155,7 +155,7 @@ Ensure the PR description includes:
 - risk assessment
 - files changed
 
----------------------------------------------------------------------
+---
 
 8. Validate PR Scope
 
@@ -171,8 +171,7 @@ If unrelated changes are detected:
 
 Highlight them and recommend removal before creating the PR.
 
-
----------------------------------------------------------------------
+---
 
 9. Handle Repository Provider
 
@@ -208,7 +207,7 @@ If the repository uses SVN:
 
 Explain that Pull Requests are not supported and provide the appropriate workflow for commits and code reviews.
 
----------------------------------------------------------------------
+---
 
 10. Output Format
 
@@ -222,12 +221,14 @@ Current Branch:
 <branch name>
 
 Base Branch:
+
 <base branch>
 
 PR Template Detected:
 <path or none>
 
 PR Title:
+
 <title>
 
 PR Description:

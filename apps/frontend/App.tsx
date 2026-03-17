@@ -27,7 +27,14 @@ function App() {
           <Routes>
             <Route path="/login" element={<AuthAwareLoginRedirect />} />
             <Route path="/signup" element={<AuthAwareSignupRedirect />} />
-            <Route path="/profile" element={<ProtectedRoute><ProfileScreen /></ProtectedRoute>} />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfileScreen />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/" element={<HomeScreen />} />
           </Routes>
         </BrowserRouter>

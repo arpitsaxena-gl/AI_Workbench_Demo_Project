@@ -5,13 +5,14 @@ Your goal is to generate production-ready code that integrates correctly with th
 **Apply this process regardless of programming language, framework, or stack.** Works with any codebase (JavaScript, Python, Java, C#, Go, Rust, Swift, Kotlin, etc.) and any layer (frontend, backend, mobile, CLI, API, etc.).
 
 The implementation may involve:
+
 - Frontend UI
 - Backend APIs
 - Full stack (frontend + backend)
 
 Ensure the generated code aligns with the project's architecture and coding style.
 
----------------------------------------------------------------------
+---
 
 1. Understand the Requirement
 
@@ -26,9 +27,9 @@ Analyze the provided feature or ticket description and identify:
 
 If the requirement is unclear, clearly state reasonable assumptions.
 
----------------------------------------------------------------------
+---
 
----------------------------------------------------------------------
+---
 
 2. Duplicate Feature Detection
 
@@ -62,7 +63,7 @@ If no similar feature exists:
 
 Proceed with implementing the feature normally.
 
----------------------------------------------------------------------
+---
 
 3. Determine Feature Type
 
@@ -73,6 +74,7 @@ Backend API Feature (REST, GraphQL, gRPC, etc.)
 Full Stack Feature
 
 Frontend features may include:
+
 - UI components
 - screens/pages
 - forms
@@ -81,6 +83,7 @@ Frontend features may include:
 - loading and error states
 
 Backend features may include:
+
 - API endpoints (REST, GraphQL, gRPC, or project-specific)
 - controllers/handlers
 - services/business logic
@@ -92,7 +95,7 @@ Full stack features include both frontend and backend layers.
 
 Generate code only for the layers required by the feature.
 
----------------------------------------------------------------------
+---
 
 4. Follow Repository Standards
 
@@ -107,6 +110,7 @@ If `agent.md` does not exist or does not define standards:
 Inspect the existing project codebase and follow the patterns already used in the repository.
 
 This includes:
+
 - folder/package structure
 - file naming conventions
 - architecture style
@@ -117,7 +121,7 @@ This includes:
 
 Ensure the new code is consistent with the existing implementation.
 
----------------------------------------------------------------------
+---
 
 5. Detect Project Language and Framework
 
@@ -137,7 +141,7 @@ Generate implementation that matches the language, framework, and architecture a
 
 Do not introduce a different language or framework than what the repository uses.
 
----------------------------------------------------------------------
+---
 
 6. Implementation Guidelines
 
@@ -153,7 +157,7 @@ The implementation must:
 
 Prefer minimal and safe changes.
 
----------------------------------------------------------------------
+---
 
 7. Backend API Handling (If Backend Is Required)
 
@@ -172,7 +176,7 @@ Include (stack-appropriate):
 
 Ensure API responses match the response format already used in the project.
 
----------------------------------------------------------------------
+---
 
 8. API Testing (If Backend APIs Are Implemented)
 
@@ -182,6 +186,7 @@ Follow this priority order for API testing:
 
 Priority 1: MCP Tools (Preferred)
 Check if an MCP server exposes tools for the API being tested.
+
 - Discover available MCP servers from the project's MCP configuration (e.g. `.cursor/mcp.json`)
 - List available MCP tools under the discovered server
 - Read the tool's JSON schema to confirm required parameters
@@ -190,6 +195,7 @@ Check if an MCP server exposes tools for the API being tested.
 
 Priority 2: REST Client (.http / .rest files)
 If no MCP tool is available, use `.http` or `.rest` format (REST Client plugin).
+
 - Create or update `.http` files in the `apis/` folder
 - Include base URL variable, endpoint tests, example payloads, and query parameters
 
@@ -211,28 +217,32 @@ Example .http structure:
 @baseUrl = http://localhost:3000
 
 ### Create Resource
+
 POST {{baseUrl}}/api/resource
 Content-Type: application/json
 
 {
-  "name": "Example"
+"name": "Example"
 }
 
 ### Fetch Resource
+
 GET {{baseUrl}}/api/resource
 
 ### Update Resource
+
 PUT {{baseUrl}}/api/resource/{{id}}
 Content-Type: application/json
 
 {
-  "name": "Updated Example"
+"name": "Updated Example"
 }
 
 ### Delete Resource
+
 DELETE {{baseUrl}}/api/resource/{{id}}
 
----------------------------------------------------------------------
+---
 
 9. Scope Control
 
@@ -247,7 +257,7 @@ Do NOT:
 
 Testing will be handled separately by another agent.
 
----------------------------------------------------------------------
+---
 
 10. Output Format
 
@@ -263,10 +273,12 @@ Implementation Plan:
 <steps required to implement the feature>
 
 Files to Create or Modify:
+
 - file path
 - purpose
 
 API Contract (If backend):
+
 - endpoint
 - method
 - request body

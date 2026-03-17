@@ -12,7 +12,9 @@ function LoginScreen() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {},
+  );
   const [apiError, setApiError] = useState('');
 
   const validateEmail = (value: string) => {
@@ -73,16 +75,27 @@ function LoginScreen() {
   };
 
   return (
-    <div className={styles.container} style={{ backgroundColor: colors.background }}>
+    <div
+      className={styles.container}
+      style={{ backgroundColor: colors.background }}
+    >
       <div className={styles.scrollContainer}>
         <div className={styles.content}>
           {/* Header */}
           <div className={styles.header}>
-            <div className={styles.logoContainer} style={{ backgroundColor: colors.primary }}>
+            <div
+              className={styles.logoContainer}
+              style={{ backgroundColor: colors.primary }}
+            >
               <span className={styles.logoText}>✦</span>
             </div>
-            <h1 className={styles.title} style={{ color: colors.text }}>Welcome Back</h1>
-            <p className={styles.subtitle} style={{ color: colors.secondaryText }}>
+            <h1 className={styles.title} style={{ color: colors.text }}>
+              Welcome Back
+            </h1>
+            <p
+              className={styles.subtitle}
+              style={{ color: colors.secondaryText }}
+            >
               Sign in to continue to your account
             </p>
           </div>
@@ -98,7 +111,9 @@ function LoginScreen() {
 
             {/* Email Input */}
             <div className={styles.inputContainer}>
-              <label className={styles.label} style={{ color: colors.text }}>Email</label>
+              <label className={styles.label} style={{ color: colors.text }}>
+                Email
+              </label>
               <input
                 type="email"
                 className={styles.input}
@@ -109,7 +124,7 @@ function LoginScreen() {
                 }}
                 placeholder="Enter your email"
                 value={email}
-                onChange={(e) => {
+                onChange={e => {
                   setEmail(e.target.value);
                   if (errors.email) setErrors({ ...errors, email: undefined });
                 }}
@@ -122,7 +137,9 @@ function LoginScreen() {
 
             {/* Password Input */}
             <div className={styles.inputContainer}>
-              <label className={styles.label} style={{ color: colors.text }}>Password</label>
+              <label className={styles.label} style={{ color: colors.text }}>
+                Password
+              </label>
               <div className={styles.passwordContainer}>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -134,9 +151,10 @@ function LoginScreen() {
                   }}
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => {
+                  onChange={e => {
                     setPassword(e.target.value);
-                    if (errors.password) setErrors({ ...errors, password: undefined });
+                    if (errors.password)
+                      setErrors({ ...errors, password: undefined });
                   }}
                   aria-label="Password input"
                 />
@@ -162,7 +180,10 @@ function LoginScreen() {
               className={styles.forgotPassword}
               onClick={handleForgotPassword}
             >
-              <span className={styles.forgotPasswordText} style={{ color: colors.primary }}>
+              <span
+                className={styles.forgotPasswordText}
+                style={{ color: colors.primary }}
+              >
                 Forgot Password?
               </span>
             </button>
@@ -184,11 +205,20 @@ function LoginScreen() {
 
             {/* Divider */}
             <div className={styles.dividerContainer}>
-              <div className={styles.divider} style={{ backgroundColor: colors.border }} />
-              <span className={styles.dividerText} style={{ color: colors.secondaryText }}>
+              <div
+                className={styles.divider}
+                style={{ backgroundColor: colors.border }}
+              />
+              <span
+                className={styles.dividerText}
+                style={{ color: colors.secondaryText }}
+              >
                 or continue with
               </span>
-              <div className={styles.divider} style={{ backgroundColor: colors.border }} />
+              <div
+                className={styles.divider}
+                style={{ backgroundColor: colors.border }}
+              />
             </div>
 
             {/* Social Login Buttons */}
@@ -201,7 +231,12 @@ function LoginScreen() {
                 aria-label="Sign in with Google"
               >
                 <span className={styles.socialIcon}>G</span>
-                <span className={styles.socialText} style={{ color: colors.text }}>Google</span>
+                <span
+                  className={styles.socialText}
+                  style={{ color: colors.text }}
+                >
+                  Google
+                </span>
               </button>
 
               <button
@@ -212,16 +247,28 @@ function LoginScreen() {
                 aria-label="Sign in with Apple"
               >
                 <span className={styles.socialIcon}>🍎</span>
-                <span className={styles.socialText} style={{ color: colors.text }}>Apple</span>
+                <span
+                  className={styles.socialText}
+                  style={{ color: colors.text }}
+                >
+                  Apple
+                </span>
               </button>
             </div>
 
             {/* Sign Up Link */}
             <div className={styles.signUpContainer}>
-              <span className={styles.signUpText} style={{ color: colors.secondaryText }}>
+              <span
+                className={styles.signUpText}
+                style={{ color: colors.secondaryText }}
+              >
                 Don't have an account?{' '}
               </span>
-              <button type="button" onClick={handleSignUp} className={styles.signUpLink}>
+              <button
+                type="button"
+                onClick={handleSignUp}
+                className={styles.signUpLink}
+              >
                 <span style={{ color: colors.primary }}>Sign Up</span>
               </button>
             </div>
