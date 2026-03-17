@@ -13,7 +13,7 @@
     "bootstrap": "npm install",
     "test:e2e": "playwright test",
     "lint:fix": "eslint . --fix",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "turbo run test:coverage",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "npx tsx e2e/cleanup-screenshots.ts && cross-env PLAYWRIGHT_SLOW_MO=1000 playwright test --headed --project=chromium --workers=1",
     "test:e2e:report": "playwright show-report",

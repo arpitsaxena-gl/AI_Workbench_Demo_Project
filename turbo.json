@@ -20,6 +20,9 @@
     "test": {
       "dependsOn": ["^test"],
       "cache": false
+    },
+    "test:coverage": {
+      "cache": false
     }
   }
 }
