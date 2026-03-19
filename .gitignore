@@ -26,6 +26,7 @@ jest.config.js
 /playwright-report/
 /playwright/.cache/
 /e2e/screenshots/
+**/e2e/screenshots/
 /blob-report/
 
 # Environment
