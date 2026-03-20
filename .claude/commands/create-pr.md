@@ -76,7 +76,28 @@ Stop execution.
 
 ---
 
-4. Identify Base Branch
+4. Validate Branch Naming Convention
+
+Check that the current branch follows the repository's naming convention.
+
+Expected patterns (detect from existing branches or use defaults):
+
+- `feature/<ticket-id>-short-description` (e.g. `feature/MPX-142-login-validation`)
+- `bugfix/<ticket-id>-short-description` (e.g. `bugfix/MPX-200-fix-crash`)
+- `hotfix/<description>` (e.g. `hotfix/security-patch`)
+- `chore/<description>` (e.g. `chore/update-dependencies`)
+- `refactor/<description>` (e.g. `refactor/auth-middleware`)
+
+If the branch name does not match any convention:
+
+- Warn the user but do not block PR creation
+- Suggest a rename if the branch has not been pushed yet
+
+Extract the ticket ID from the branch name (if present) for use in the PR title and Jira linking.
+
+---
+
+5. Identify Base Branch
 
 Detect the repository's base branch.
 
@@ -90,7 +111,7 @@ Determine the correct base branch by inspecting repository configuration.
 
 ---
 
-5. Identify Changes
+6. Identify Changes
 
 Analyze the differences between the current branch and the base branch.
 
@@ -105,7 +126,7 @@ Ignore unrelated repository files.
 
 ---
 
-6. Detect PR Template
+7. Detect PR Template
 
 Search the repository for a PR template file.
 
@@ -127,7 +148,7 @@ Generate the PR description using the repository standard structure.
 
 ---
 
-7. Generate PR Description
+8. Generate PR Description
 
 Use the detected PR template to populate the PR content.
 
@@ -157,7 +178,7 @@ Ensure the PR description includes:
 
 ---
 
-8. Validate PR Scope
+9. Validate PR Scope
 
 Ensure the PR only includes changes related to the current feature or bug fix.
 
@@ -173,7 +194,58 @@ Highlight them and recommend removal before creating the PR.
 
 ---
 
-9. Handle Repository Provider
+10. Auto-Detect Labels
+
+Based on the branch name, PR title, and changes, automatically determine labels to apply.
+
+Detection rules:
+
+| Branch prefix / PR title prefix | Label |
+|---|---|
+| `feature/` or title starts with `feat:` | `feature` |
+| `bugfix/` or `hotfix/` or title starts with `fix:` | `bug` |
+| `chore/` or title starts with `chore:` | `chore` |
+| `refactor/` or title starts with `refactor:` | `refactor` |
+| Title starts with `docs:` | `documentation` |
+| Title starts with `test:` | `test` |
+| Changes only in test files | `test` |
+| Changes only in documentation/markdown files | `documentation` |
+
+Additional labels based on scope:
+
+| Condition | Label |
+|---|---|
+| Files changed in `apps/frontend/` or UI components | `frontend` |
+| Files changed in `apps/backend/` or API routes | `backend` |
+| Files changed in both frontend and backend | `full-stack` |
+| `package.json` or lock files changed | `dependencies` |
+| CI/CD config files changed (`.github/workflows/`, `turbo.json`) | `ci/cd` |
+
+Apply all matching labels. If using GitHub MCP or `gh` CLI, pass labels during PR creation. If labels don't exist in the repository, note them in the output so the user can create them.
+
+---
+
+11. Auto-Assign Reviewers
+
+Determine reviewers to assign to the PR.
+
+Strategy (in order of priority):
+
+1. **CODEOWNERS file** — If `.github/CODEOWNERS` or `CODEOWNERS` exists, parse it to find owners of the changed files and assign them as reviewers.
+
+2. **Git blame / recent contributors** — Identify the most frequent recent contributors to the changed files (excluding the PR author). Suggest the top 1-2 as reviewers.
+
+3. **Team convention** — If the repository has a documented reviewer assignment convention (in `CONTRIBUTING.md`, `AGENTS.md`, or similar), follow it.
+
+4. **Fallback** — If none of the above yields reviewers, list the output as:
+
+"No reviewers auto-detected. Please assign reviewers manually."
+
+When creating the PR via GitHub MCP or `gh` CLI, pass reviewers using the `--reviewer` flag or equivalent API parameter.
+
+---
+
+12. Handle Repository Provider
 
 Based on the detected repository provider, prepare the Pull Request workflow.
 
@@ -209,7 +281,34 @@ Explain that Pull Requests are not supported and provide the appropriate workflo
 
 ---
 
-10. Output Format
+13. Log PR Creation
+
+After the PR is created (or the URL is generated), produce a structured log entry.
+
+Log format:
+
+```
+PR Creation Log
+───────────────
+Timestamp:      <current date and time>
+Repository:     <org/repo>
+Provider:       <GitHub | GitLab | Bitbucket>
+Branch:         <current-branch> → <base-branch>
+Branch Valid:   <Yes | No — convention warning>
+PR Title:       <title>
+PR URL:         <url or "pending — user to create via URL">
+Labels:         <comma-separated list or "none">
+Reviewers:      <comma-separated list or "none — assign manually">
+Files Changed:  <count>
+Method:         <GitHub MCP | gh CLI | URL fallback>
+Jira Ticket:    <ID or "none">
+```
+
+Display this log to the user as a summary after PR creation completes.
+
+---
+
+14. Output Format
 
 Repository Provider:
 <GitHub | GitLab | Bitbucket | SVN>
@@ -220,19 +319,26 @@ Repository Status:
 Current Branch:
 <branch name>
 
-Base Branch:
+Branch Convention:
+<valid | warning — suggest rename>
 
+Base Branch:
 <base branch>
 
 PR Template Detected:
 <path or none>
 
 PR Title:
-
 <title>
 
 PR Description:
 <generated PR description>
+
+Labels Applied:
+<list of auto-detected labels>
+
+Reviewers Assigned:
+<list of reviewers or "none — assign manually">
 
 Files Included in PR:
 <list of changed files>
@@ -248,3 +354,6 @@ Recommended PR Command (if using CLI):
 
 PR Creation URL (if URL fallback):
 <URL for user to open and paste title + description>
+
+PR Creation Log:
+<structured log entry>
