@@ -285,11 +285,45 @@ describe('POST /api/v1/user/validateLogin', () => {
 
 ## MCP Servers
 
-Three MCP servers are configured in `.cursor/mcp.json`:
+Five MCP servers are configured in `.cursor/mcp.json`:
 
 - **github** — GitHub API (PRs, issues, code search)
-- **mongodb** — Direct MongoDB access
+- **mongodb** — Direct MongoDB access (official MongoDB MCP)
 - **api-tester** — Custom API testing (`mcp-server.cjs`), supports runtime `baseUrl` override
+- **multi-db** — Multi-database MCP (`multi-db-mcp-server.cjs`) with MongoDB, Redis, and Neo4j
+- **filesystem** — File system access via `@modelcontextprotocol/server-filesystem`
+
+### Multi-DB MCP Tools (`multi-db-mcp-server.cjs`)
+
+| Tool | DB | Description |
+|---|---|---|
+| `mongo_find` | MongoDB | Query documents with filter, sort, limit |
+| `mongo_insert` | MongoDB | Insert one or many documents |
+| `mongo_update` | MongoDB | Update documents (single or bulk) |
+| `mongo_delete` | MongoDB | Delete documents (single or bulk) |
+| `mongo_aggregate` | MongoDB | Run aggregation pipelines |
+| `mongo_list_collections` | MongoDB | List all collections |
+| `redis_get` | Redis | Get value by key |
+| `redis_set` | Redis | Set key-value with optional TTL |
+| `redis_delete` | Redis | Delete keys |
+| `redis_keys` | Redis | List keys by pattern |
+| `redis_hash_get` | Redis | Get hash fields |
+| `redis_hash_set` | Redis | Set hash fields |
+| `neo4j_query` | Neo4j | Run read-only Cypher queries |
+| `neo4j_write` | Neo4j | Run write Cypher queries (CREATE, MERGE, etc.) |
+| `neo4j_schema` | Neo4j | Get labels, relationship types, property keys |
+| `smart_fetch` | Redis+MongoDB | Cache-first pattern: check Redis, fallback to MongoDB, cache result |
+
+**Environment variables** (set in `.cursor/mcp.json` `env` block):
+
+| Variable | Default | Description |
+|---|---|---|
+| `MONGO_URI` | `mongodb://localhost:27017` | MongoDB connection string |
+| `MONGO_DB` | `mydb` | Database name |
+| `REDIS_URL` | `redis://localhost:6379` | Redis connection URL |
+| `NEO4J_URI` | `bolt://localhost:7687` | Neo4j Bolt URI |
+| `NEO4J_USER` | `neo4j` | Neo4j username |
+| `NEO4J_PASSWORD` | `password` | Neo4j password |
 
 Replace `<your-...>` placeholders in `.cursor/mcp.json` with your credentials.
 
